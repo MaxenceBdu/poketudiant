@@ -10,18 +10,20 @@ import java.io.IOException;
 public class Main{
 
     public static void main(String[] args) throws UnknownHostException, SocketException, IOException{
+        int udpPort = 9000;
         boolean found = false;
-        byte[] buf1, buf2 = new byte[50];
         String search = "looking for poketudiant servers";
         String wantedResponse = "i'm a poketudiant server";
+
+        byte[] buf1 = search.getBytes();
+        byte[] buf2 = new byte[50];
+        
         InetAddress address = InetAddress.getByName("255.255.255.255");
 
-        buf1 = search.getBytes();
-
-        DatagramSocket socket = new DatagramSocket(9000);
+        DatagramSocket socket = new DatagramSocket();
         socket.setBroadcast(true);
 
-        DatagramPacket packet1 = new DatagramPacket(buf1, buf1.length, address, 9000); 
+        DatagramPacket packet1 = new DatagramPacket(buf1, buf1.length, address, udpPort); 
 
         DatagramPacket packet2 = new DatagramPacket(buf2, buf2.length);
 
