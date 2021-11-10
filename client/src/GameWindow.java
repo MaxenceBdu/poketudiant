@@ -34,7 +34,6 @@ public class GameWindow extends JFrame{
         this.setContentPane(JoinCreate.getInstance());
     }
 
-
     public void chooseServer(InetAddress serverAdress){
         this.clientBack.askForGameList(serverAdress);
     }

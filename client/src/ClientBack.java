@@ -1,4 +1,7 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -58,22 +61,17 @@ public class ClientBack{
         byte[] buf1 = ASK_GAME_LIST.getBytes();
         byte[] buf2 = new byte[256];
         try{
-            DatagramSocket socket = new DatagramSocket();
-            DatagramPacket send = new DatagramPacket(buf1, buf1.length, serverAddress, TCP_PORT);
-            DatagramPacket receive = new DatagramPacket(buf2, buf2.length);
+            Socket socket = new Socket(serverAddress, 9001);
 
-            socket.send(send);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintStream out = new PrintStream(socket.getOutputStream());
+
             socket.setSoTimeout(5000);
-
-            try{
-                socket.receive(receive);
-            }catch(SocketTimeoutException e){
-                socket.close();
-                GameWindow.getInstance().sendGameListToFront("Server took too much time");
-            }
-
+            out.println("require game list");
+            String response = in.readLine();
             socket.close();
-            GameWindow.getInstance().sendGameListToFront(new String(receive.getData()));
+
+            GameWindow.getInstance().sendGameListToFront(response);
         }catch(IOException e){
             e.printStackTrace();
         }
