@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,23 +11,17 @@ public class JoinCreate extends JPanel {
     private final ServerList serverList;
     private final GameList gameList;
 
-    private static JoinCreate joinCreateInstance;
-
-    private JoinCreate(){
-        this.serverList = new ServerList();
+    public JoinCreate(){
+        setLayout(null);
+        serverList = new ServerList();
+        setBackground(new Color(0,255,0));
+        //serverList.setBounds(10,10,300,500);
         this.add(this.serverList);
 
         this.gameList = new GameList();
         this.add(this.gameList);
-    }
 
-    public final static JoinCreate getInstance() {
-        if(JoinCreate.joinCreateInstance == null){
-            JoinCreate.joinCreateInstance = new JoinCreate();
-        }
-
-        JoinCreate.joinCreateInstance.setVisible(true);
-        return JoinCreate.joinCreateInstance;
+        this.setVisible(true);
     }
 
     public ServerList getServerList() {
@@ -41,7 +36,8 @@ public class JoinCreate extends JPanel {
         this.serverList.addServer(serverAddress);
     }
 
-    public void displayGameList(HashMap<Integer, String> gameList){
+    public void displayGameList(List<GameListItem> gameList){
+        this.gameList.setVisible(true);
         this.gameList.displayGameList(gameList);
     }
 }
