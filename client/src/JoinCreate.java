@@ -5,27 +5,46 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class JoinCreate extends JPanel {
+public class JoinCreate extends JLayeredPane {
 
     // Panel with list of servers + refresh button
     private final ServerList serverList;
     private final GameList gameList;
+    private GameCreationPanel gameCreationPanel;
+    //private final CreateButton createButton;
 
-    public JoinCreate(){
-        setLayout(null);
+    public JoinCreate(int width, int height){
+        //setLayout(null);
+        setSize(width, height);
+        setForeground(new Color(0,255,0));
+
         serverList = new ServerList();
-        setBackground(new Color(0,255,0));
-        //serverList.setBounds(10,10,300,500);
-        this.add(this.serverList);
+        this.add(serverList,0);
 
         this.gameList = new GameList();
-        this.add(this.gameList);
+        this.add(gameList,0);
 
         this.setVisible(true);
     }
 
+    public GameCreationPanel getGameCreationPanel(){
+        return gameCreationPanel;
+    }
+
     public ServerList getServerList() {
         return serverList;
+    }
+
+    public void showGameCreationPanel(){
+        if(gameCreationPanel == null){
+            gameCreationPanel = new GameCreationPanel();
+            //putLayer(gameCreationPanel,POPUP_LAYER);
+            this.add(gameCreationPanel);
+            setLayer(gameCreationPanel, POPUP_LAYER);
+            //moveToFront(gameCreationPanel);
+        }else{
+            gameCreationPanel.setVisible(true);
+        }
     }
 
     public void clearServersList(){
@@ -40,5 +59,6 @@ public class JoinCreate extends JPanel {
         this.gameList.setVisible(true);
         this.gameList.displayGameList(gameList);
     }
+
 }
 

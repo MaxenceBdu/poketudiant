@@ -19,8 +19,8 @@ public class GameWindow extends JFrame{
         setResizable(true);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-        joinCreatePanel = new JoinCreate();
-        joinCreatePanel.setSize(this.getWidth(),this.getHeight());
+        joinCreatePanel = new JoinCreate(this.getWidth(),this.getHeight());
+        this.setContentPane(joinCreatePanel);
         setVisible(true);
     }
 
@@ -42,10 +42,9 @@ public class GameWindow extends JFrame{
 
     public void sendAddressToFront(InetAddress address){
         joinCreatePanel.addServer(address);
-        this.setContentPane(joinCreatePanel);
     }
 
-    public void askForNewServerList(){
+    public void askForServerList(){
         this.clientBack.askForServers();
     }
 
@@ -67,5 +66,9 @@ public class GameWindow extends JFrame{
             }
         }
         joinCreatePanel.displayGameList(games);
+    }
+
+    public void sendGameCreationRequest(String gameName){
+        this.clientBack.askForGameCreation(gameName);
     }
 }

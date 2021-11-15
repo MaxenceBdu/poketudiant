@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ServerList extends JPanel {
 
-    private List<JButton> servers;
+    private List<ServerButton> servers;
     private RefreshButton refreshButton;
 
     public ServerList(){
@@ -20,6 +20,8 @@ public class ServerList extends JPanel {
 
         this.refreshButton = new RefreshButton(this);
         this.add(this.refreshButton);
+
+        this.add(new CreateButton());
     }
 
     public void clearServersList(){
@@ -30,8 +32,7 @@ public class ServerList extends JPanel {
     }
 
     public void addServer(InetAddress address){
-        JButton serverButton = new JButton("Join " + address.getHostAddress());
-        serverButton.addActionListener(new ServerButtonListener(address));
+        ServerButton serverButton = new ServerButton(address);
         this.servers.add(serverButton);
         this.add(serverButton);
     }

@@ -18,7 +18,7 @@ public class RefreshButton extends JButton {
         @Override
         public void actionPerformed(ActionEvent e) {
             serverList.clearServersList();
-            GameWindow.getInstance().askForNewServerList();
+            GameWindow.getInstance().askForServerList();
         }
     }
 }

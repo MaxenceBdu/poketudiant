@@ -11,8 +11,6 @@ public class ClientBack implements ConstantMessages {
     final int TCP_PORT = 9001;
 
     private DatagramSocket udpSocket;
-    private DatagramPacket send;
-    private DatagramPacket receive;
 
     private Socket tcpSocket;
     private BufferedReader socketReader;
@@ -41,21 +39,21 @@ public class ClientBack implements ConstantMessages {
         try {
             InetAddress address = InetAddress.getByName("255.255.255.255");
 
-            DatagramPacket packet1 = new DatagramPacket(buf1, buf1.length, address, UDP_PORT);
-            DatagramPacket packet2 = new DatagramPacket(buf2, buf2.length);
+            DatagramPacket send = new DatagramPacket(buf1, buf1.length, address, UDP_PORT);
+            DatagramPacket receive = new DatagramPacket(buf2, buf2.length);
 
             try{
-                udpSocket.send(packet1);
+                udpSocket.send(send);
             }catch(IOException e){
                 e.printStackTrace();
             }
 
             try{
                 while (true) {
-                    udpSocket.receive(packet2);
-                    String realResponse = new String(packet2.getData(), 0, packet2.getLength());
+                    udpSocket.receive(receive);
+                    String realResponse = new String(receive.getData(), 0, receive.getLength());
                     if (realResponse.equals(SERVER_FOUND)) {
-                        GameWindow.getInstance().sendAddressToFront(packet2.getAddress());
+                        GameWindow.getInstance().sendAddressToFront(receive.getAddress());
                     }
                 }
             }catch(SocketTimeoutException e){}
@@ -65,6 +63,10 @@ public class ClientBack implements ConstantMessages {
         }catch(UnknownHostException e){
             e.printStackTrace();
         }
+    }
+
+    private boolean newTcpSocketNeeded(InetAddress serverAddress){
+        return tcpSocket == null || !serverAddress.getHostAddress().equals(tcpSocket.getInetAddress().getHostAddress());
     }
 
     /**
@@ -82,7 +84,7 @@ public class ClientBack implements ConstantMessages {
                 socketReader = new BufferedReader(new InputStreamReader(tcpSocket.getInputStream()));
                 socketPrinter = new PrintStream(tcpSocket.getOutputStream());
 
-                socketPrinter.println("require game list");
+                socketPrinter.println(ASK_GAME_LIST);
                 String response = socketReader.readLine();
 
                 // socketPrinter.flush();
@@ -95,7 +97,21 @@ public class ClientBack implements ConstantMessages {
         }
     }
 
-    private boolean newTcpSocketNeeded(InetAddress serverAddress){
-        return tcpSocket == null || !serverAddress.getHostAddress().equals(tcpSocket.getInetAddress().getHostAddress());
+    public void askForGameCreation(String gameName){
+
+        try{
+            socketReader = new BufferedReader(new InputStreamReader(tcpSocket.getInputStream()));
+            socketPrinter = new PrintStream(tcpSocket.getOutputStream());
+
+            socketPrinter.println(CREATE_GAME+gameName);
+            String response = socketReader.readLine();
+
+            // socketPrinter.flush();
+            // socketReader.reset();
+            System.out.println(response);
+            GameWindow.getInstance().sendGameListToFront(response);
+        }catch(IOException e){
+            e.printStackTrace();
+        }
     }
 }

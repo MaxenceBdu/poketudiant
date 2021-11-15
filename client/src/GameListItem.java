@@ -23,7 +23,7 @@ public class GameListItem extends JButton {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            // join game
         }
     }
 }
