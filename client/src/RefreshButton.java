@@ -4,20 +4,20 @@ import java.awt.event.ActionListener;
 
 public class RefreshButton extends JButton {
 
-    public RefreshButton(ServerList serverList){
+    public RefreshButton(ServerListPanel serverListPanel){
         this.setText("Refresh");
-        this.addActionListener(new RefreshButtonListener(serverList));
+        this.addActionListener(new RefreshButtonListener(serverListPanel));
     }
 
     static class RefreshButtonListener implements ActionListener{
-        private ServerList serverList;
+        private ServerListPanel serverListPanel;
 
-        public RefreshButtonListener(ServerList serverList){
-            this.serverList = serverList;
+        public RefreshButtonListener(ServerListPanel serverListPanel){
+            this.serverListPanel = serverListPanel;
         }
         @Override
         public void actionPerformed(ActionEvent e) {
-            serverList.clearServersList();
+            serverListPanel.clearServersList();
             GameWindow.getInstance().askForServerList();
         }
     }

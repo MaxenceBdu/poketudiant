@@ -28,10 +28,6 @@ public class ClientBack implements ConstantMessages {
         }
     }
 
-    /**
-     * Send message in broadcast to check the existence of poketudiant servers (UDP)
-     *
-     */
     protected void askForServers() {
 
         byte[] buf1 = LOOKING_FOR_SERVERS.getBytes();
@@ -65,35 +61,28 @@ public class ClientBack implements ConstantMessages {
         }
     }
 
-    private boolean newTcpSocketNeeded(InetAddress serverAddress){
-        return tcpSocket == null || !serverAddress.getHostAddress().equals(tcpSocket.getInetAddress().getHostAddress());
-    }
-
-    /**
-     * Ask to the chosen server the list of games (TCP)
-     *
-     * @param serverAddress InetAdress of the chosen server
-     */
     public void askForGameList(InetAddress serverAddress){
-
-        if(newTcpSocketNeeded(serverAddress)){
-            try{
-                tcpSocket = new Socket(serverAddress, TCP_PORT);
-                tcpSocket.setSoTimeout(5000);
-
-                socketReader = new BufferedReader(new InputStreamReader(tcpSocket.getInputStream()));
-                socketPrinter = new PrintStream(tcpSocket.getOutputStream());
-
-                socketPrinter.println(ASK_GAME_LIST);
-                String response = socketReader.readLine();
-
-                // socketPrinter.flush();
-                // socketReader.reset();
-                System.out.println(response);
-                GameWindow.getInstance().sendGameListToFront(response);
-            }catch(IOException e){
-                e.printStackTrace();
+        try{
+            if (tcpSocket != null) {
+                tcpSocket.close();
             }
+
+            tcpSocket = new Socket(serverAddress, TCP_PORT);
+            tcpSocket.setSoTimeout(5000);
+
+            socketReader = new BufferedReader(new InputStreamReader(tcpSocket.getInputStream()));
+            socketPrinter = new PrintStream(tcpSocket.getOutputStream());
+
+            socketPrinter.println(ASK_GAME_LIST);
+            String response = socketReader.readLine();
+
+            // socketPrinter.flush();
+            // socketReader.reset();
+            System.out.println(response);
+            GameWindow.getInstance().sendGameListToFront(response);
+
+        }catch(IOException e){
+            e.printStackTrace();
         }
     }
 

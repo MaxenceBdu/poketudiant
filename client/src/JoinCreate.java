@@ -1,28 +1,31 @@
 import javax.swing.*;
 import java.awt.*;
 import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class JoinCreate extends JLayeredPane {
 
     // Panel with list of servers + refresh button
-    private final ServerList serverList;
-    private final GameList gameList;
+    private final ServerListPanel serverListPanel;
+    private final GameListPanel gameListPanel;
     private GameCreationPanel gameCreationPanel;
-    //private final CreateButton createButton;
+    private final CreateButton createButton;
 
     public JoinCreate(int width, int height){
         //setLayout(null);
         setSize(width, height);
         setForeground(new Color(0,255,0));
 
-        serverList = new ServerList();
-        this.add(serverList,0);
+        serverListPanel = new ServerListPanel();
+        this.add(serverListPanel,0);
 
-        this.gameList = new GameList();
-        this.add(gameList,0);
+        this.gameListPanel = new GameListPanel();
+        this.add(gameListPanel,0);
+
+        createButton = new CreateButton();
+        createButton.setSize(createButton.getMaximumSize());
+        createButton.setLocation(200, 0);
+        this.add(createButton);
 
         this.setVisible(true);
     }
@@ -31,8 +34,8 @@ public class JoinCreate extends JLayeredPane {
         return gameCreationPanel;
     }
 
-    public ServerList getServerList() {
-        return serverList;
+    public ServerListPanel getServerList() {
+        return serverListPanel;
     }
 
     public void showGameCreationPanel(){
@@ -48,16 +51,16 @@ public class JoinCreate extends JLayeredPane {
     }
 
     public void clearServersList(){
-        this.serverList.clearServersList();
+        this.serverListPanel.clearServersList();
     }
 
     public void addServer(InetAddress serverAddress){
-        this.serverList.addServer(serverAddress);
+        this.serverListPanel.addServer(serverAddress);
     }
 
     public void displayGameList(List<GameListItem> gameList){
-        this.gameList.setVisible(true);
-        this.gameList.displayGameList(gameList);
+        this.gameListPanel.setVisible(true);
+        this.gameListPanel.displayGameList(gameList);
     }
 
 }
