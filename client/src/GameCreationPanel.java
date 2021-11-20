@@ -8,12 +8,12 @@ public class GameCreationPanel extends JPanel {
     private JTextArea textArea;
     private JButton validateButton;
     private JButton cancelButton;
+    private JLabel infoMessage;
 
     GameCreationPanel(){
         setLayout(null);
         setBounds(600,600,500,200);
         setBackground(new Color(0,0,0));
-        System.out.println("constructor gamecreationpanel");
         textArea = new JTextArea();
         textArea.setBounds(20,20, 100, 50);
         add(textArea);
@@ -25,13 +25,20 @@ public class GameCreationPanel extends JPanel {
         add(cancelButton);
 
         validateButton = new JButton("Validate");
-        validateButton.addActionListener(new ValidateButtonListener(textArea));
+        validateButton.addActionListener(new ValidateButtonListener(this));
         validateButton.setSize(validateButton.getMaximumSize());
         validateButton.setLocation(30, 100);
         add(validateButton);
 
+        infoMessage = new JLabel();
+        infoMessage.setVisible(false);
+        infoMessage.setSize(100, 30);
+        infoMessage.setLocation(300, 20);
+        add(infoMessage);
+
         this.setVisible(true);
     }
+
 
     static class CancelButtonListener implements ActionListener{
         private GameCreationPanel gameCreationPanel;
@@ -46,15 +53,23 @@ public class GameCreationPanel extends JPanel {
     }
 
     static class ValidateButtonListener implements ActionListener{
-        private JTextArea textArea;
+        private GameCreationPanel gameCreationPanel;
 
-        public ValidateButtonListener(JTextArea textArea) {
-            this.textArea = textArea;
+        public ValidateButtonListener(GameCreationPanel gameCreationPanel) {
+            this.gameCreationPanel = gameCreationPanel;
         }
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            GameWindow.getInstance().sendGameCreationRequest(this.textArea.getText());
+            if(ClientBack.getInstance().askForGameCreation(gameCreationPanel.textArea.getText())){
+                // PASSER AU PANEL DE JEU
+                gameCreationPanel.infoMessage.setForeground(Color.GREEN);
+                gameCreationPanel.infoMessage.setText("Game created");
+            }else{
+                gameCreationPanel.infoMessage.setForeground(Color.RED);
+                gameCreationPanel.infoMessage.setText("Game not created");
+            }
+            gameCreationPanel.infoMessage.setVisible(true);
         }
     }
 }

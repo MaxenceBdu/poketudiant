@@ -23,7 +23,7 @@ public class ServerButton extends JButton {
         @Override
         public void actionPerformed(ActionEvent e) {
             serverButton.setBackground(new Color(0,0,0));
-            GameWindow.getInstance().chooseServer(this.serverAdress);
+            ClientBack.getInstance().askForGameList(this.serverAdress);
         }
     }
 }

@@ -4,17 +4,19 @@ import java.awt.event.ActionListener;
 
 public class CreateButton extends JButton {
 
-    CreateButton(){
+    CreateButton(MenuPanel menuPanel){
         setText("Create game");
-        this.addActionListener(new CreateButtonListener());
+        this.addActionListener(new CreateButtonListener(menuPanel));
     }
 
     static class CreateButtonListener implements ActionListener{
-
+        private MenuPanel menuPanel;
+        public CreateButtonListener(MenuPanel menuPanel){
+            this.menuPanel = menuPanel;
+        }
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("click create");
-            GameWindow.getInstance().getJoinCreatePanel().showGameCreationPanel();
+            menuPanel.showGameCreationPanel();
         }
     }
 }

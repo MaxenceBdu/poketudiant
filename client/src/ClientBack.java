@@ -16,23 +16,34 @@ public class ClientBack implements ConstantMessages {
     private BufferedReader socketReader;
     private PrintStream socketPrinter;
 
-    public ClientBack(GameWindow gameWindow){
-        gameWindow.setClientBack(this);
-        try {
-            udpSocket = new DatagramSocket();
-            udpSocket.setBroadcast(true);
-            udpSocket.setSoTimeout(5000);
-            this.askForServers();
-        }catch(SocketException e){
-            e.printStackTrace();
+    private static ClientBack clientBackInstance;
+
+    private ClientBack(){}
+
+    public static ClientBack getInstance(){
+        if(clientBackInstance == null){
+            clientBackInstance = new ClientBack();
         }
+
+        return clientBackInstance;
     }
 
-    protected void askForServers() {
+    protected ArrayList<InetAddress> askForServers() {
+        if(udpSocket == null){
+            try {
+                udpSocket = new DatagramSocket();
+                udpSocket.setBroadcast(true);
+                udpSocket.setSoTimeout(5000);
+            }catch(SocketException e){
+                e.printStackTrace();
+                return null;
+            }
+        }
 
         byte[] buf1 = LOOKING_FOR_SERVERS.getBytes();
         byte[] buf2 = new byte[50];
         try {
+            ArrayList<InetAddress> serverList = new ArrayList<>();
             InetAddress address = InetAddress.getByName("255.255.255.255");
 
             DatagramPacket send = new DatagramPacket(buf1, buf1.length, address, UDP_PORT);
@@ -49,19 +60,24 @@ public class ClientBack implements ConstantMessages {
                     udpSocket.receive(receive);
                     String realResponse = new String(receive.getData(), 0, receive.getLength());
                     if (realResponse.equals(SERVER_FOUND)) {
-                        GameWindow.getInstance().sendAddressToFront(receive.getAddress());
+                        serverList.add(receive.getAddress());
                     }
                 }
-            }catch(SocketTimeoutException e){}
+            }catch(SocketTimeoutException e){
+                return serverList;
+            }
             catch(IOException e){
                 e.printStackTrace();
+                return null;
             }
         }catch(UnknownHostException e){
             e.printStackTrace();
+            return null;
         }
     }
 
-    public void askForGameList(InetAddress serverAddress){
+    public ArrayList<String> askForGameList(InetAddress serverAddress){
+        ArrayList<String> games = new ArrayList<>();
         try{
             if (tcpSocket != null) {
                 tcpSocket.close();
@@ -76,17 +92,22 @@ public class ClientBack implements ConstantMessages {
             socketPrinter.println(ASK_GAME_LIST);
             String response = socketReader.readLine();
 
-            // socketPrinter.flush();
-            // socketReader.reset();
-            System.out.println(response);
-            GameWindow.getInstance().sendGameListToFront(response);
+            String[] tab = response.split(" ");
+            int nbGames = Integer.parseInt(tab[tab.length-1]);
+            if(nbGames > 0){
+                for(int i = 0; i < nbGames; i++){
+                    games.add(socketReader.readLine());
+                }
+            }
 
+            return games;
         }catch(IOException e){
             e.printStackTrace();
+            return games;
         }
     }
 
-    public void askForGameCreation(String gameName){
+    public boolean askForGameCreation(String gameName){
 
         try{
             socketReader = new BufferedReader(new InputStreamReader(tcpSocket.getInputStream()));
@@ -95,12 +116,10 @@ public class ClientBack implements ConstantMessages {
             socketPrinter.println(CREATE_GAME+gameName);
             String response = socketReader.readLine();
 
-            // socketPrinter.flush();
-            // socketReader.reset();
-            System.out.println(response);
-            GameWindow.getInstance().sendGameListToFront(response);
+            return response.equals(GAME_CREATED);
         }catch(IOException e){
             e.printStackTrace();
+            return false;
         }
     }
 }

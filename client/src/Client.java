@@ -1,5 +1,6 @@
 public abstract class Client{
     public static void start(){
-        ClientBack cb = new ClientBack(GameWindow.getInstance());
+        ClientBack cb = ClientBack.getInstance();
+        DisplayWindow gw = DisplayWindow.getInstance();
     }
 }
