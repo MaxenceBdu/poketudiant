@@ -29,23 +29,6 @@ public class DisplayWindow extends JFrame{
         return DisplayWindow.displayWindowInstance;
     }
 
-    /*
-    public void sendGameListToFront(String gameList){
-        List<GameListItem> games = new ArrayList<>();
-
-        String[] lines = gameList.split("\n");
-        int gameNumber = Integer.parseInt(lines[0].substring(lines[0].length()-1));
-        if(gameNumber > 0){
-            for(int i = 1; i < gameNumber; i++){
-                String[] gameInfos = lines[i].split(" ");
-                int nbPlayers = Integer.parseInt(gameInfos[0]);
-                String gameName = gameInfos[1];
-                games.add(new GameListItem(gameName, nbPlayers));
-            }
-        }
-        joinCreatePanel.displayGameList(games);
-    }*/
-
     public void leaveHomeForMenu(){
         if(menuPanel == null) {
             menuPanel = new MenuPanel(this.getWidth(), this.getHeight());

@@ -27,7 +27,7 @@ public class MenuPanel extends JLayeredPane {
 
         serversListModel = new DefaultListModel<>();
         serversList = new JList<>(serversListModel);
-        serversList.addListSelectionListener(new ServerListSelectionListener(serversList, this));
+        serversList.addListSelectionListener(new ServerSelectionListener(serversList, this));
         serversList.setLayoutOrientation(JList.VERTICAL_WRAP);
         serversList.setBounds(0, 300, 200, 400);
         add(serversList);
@@ -46,8 +46,9 @@ public class MenuPanel extends JLayeredPane {
 
         gameListModel = new DefaultListModel<>();
         gameList = new JList<>(gameListModel);
-        gameList.setSize(gameList.getMaximumSize());
-        gameList.setLocation(700, 300);
+        //gameList.addListSelectionListener(new GameSelectionListener());
+        gameList.setLayoutOrientation(JList.VERTICAL_WRAP);
+        gameList.setBounds(700, 300, 200, 400);
         add(gameList);
 
         CreateButton cr = new CreateButton(this);
@@ -67,24 +68,20 @@ public class MenuPanel extends JLayeredPane {
     }
 
     public void addServers(ArrayList<InetAddress> addresses){
-        this.serversListModel.clear();
-        for(InetAddress addr: addresses){
-            serversListModel.addElement(addr);
-        }
+        serversListModel.clear();
+        serversListModel.addAll(addresses);
     }
 
     public void displayGames(ArrayList<String> games){
         gameListModel.clear();
-        for(String s: games){
-            gameListModel.addElement(s);
-        }
+        gameListModel.addAll(games);
     }
 
-    static class ServerListSelectionListener implements ListSelectionListener {
-        private MenuPanel menuPanel;
+    static class ServerSelectionListener implements ListSelectionListener {
+        private final MenuPanel menuPanel;
         private final JList<InetAddress> serverList;
 
-        public ServerListSelectionListener(JList<InetAddress> serverList, MenuPanel menuPanel){
+        public ServerSelectionListener(JList<InetAddress> serverList, MenuPanel menuPanel){
             this.menuPanel = menuPanel;
             this.serverList = serverList;
         }
@@ -102,7 +99,7 @@ public class MenuPanel extends JLayeredPane {
         }
 
         static class RefreshButtonListener implements ActionListener {
-            private MenuPanel menuPanel;
+            private final MenuPanel menuPanel;
 
             public RefreshButtonListener(MenuPanel menuPanel){
                 this.menuPanel =menuPanel;

@@ -41,7 +41,7 @@ public class GameCreationPanel extends JPanel {
 
 
     static class CancelButtonListener implements ActionListener{
-        private GameCreationPanel gameCreationPanel;
+        private final GameCreationPanel gameCreationPanel;
         public CancelButtonListener(GameCreationPanel gameCreationPanel) {
             this.gameCreationPanel = gameCreationPanel;
         }
@@ -53,7 +53,7 @@ public class GameCreationPanel extends JPanel {
     }
 
     static class ValidateButtonListener implements ActionListener{
-        private GameCreationPanel gameCreationPanel;
+        private final GameCreationPanel gameCreationPanel;
 
         public ValidateButtonListener(GameCreationPanel gameCreationPanel) {
             this.gameCreationPanel = gameCreationPanel;
@@ -63,8 +63,7 @@ public class GameCreationPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             if(ClientBack.getInstance().askForGameCreation(gameCreationPanel.textArea.getText())){
                 // PASSER AU PANEL DE JEU
-                gameCreationPanel.infoMessage.setForeground(Color.GREEN);
-                gameCreationPanel.infoMessage.setText("Game created");
+                DisplayWindow.getInstance().setContentPane(new GamePanel());
             }else{
                 gameCreationPanel.infoMessage.setForeground(Color.RED);
                 gameCreationPanel.infoMessage.setText("Game not created");

@@ -1,6 +1,10 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 public class HomePanel extends JPanel {
 
@@ -13,12 +17,16 @@ public class HomePanel extends JPanel {
         play.addActionListener(new PlayButtonListener());
 
         /*
-        ImageIcon img = new ImageIcon("assets/menu-bg.jpg");
-        JLabel background = new JLabel(img);
-        background.setSize(width, height);
-        background.setLocation(0,0);
-        add(background);
-*/
+        try{
+            Image image = new ImageIcon(ImageIO.read(new File("src/assets/menu-bg.jpg"))).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            JLabel background = new JLabel(new ImageIcon(image));
+            background.setSize(width, height);
+            background.setLocation(0,0);
+            //background.setVisible(true);
+            add(background);
+        }catch(IOException e){
+            e.printStackTrace();
+        }*/
         this.add(play);
     }
 
