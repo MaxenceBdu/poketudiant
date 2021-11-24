@@ -6,7 +6,7 @@ public class DisplayWindow extends JFrame{
     private static DisplayWindow displayWindowInstance;
     private HomePanel homePanel;
     private MenuPanel menuPanel;
-    private GamePanel gamePanel;
+    private MapPanel mapPanel;
 
     private DisplayWindow() {
         super("Pokétudiant - Boisédu & Gaudissard");

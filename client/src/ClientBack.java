@@ -28,6 +28,10 @@ public class ClientBack implements ConstantMessages {
         return clientBackInstance;
     }
 
+    public Socket getTcpSocket(){
+        return tcpSocket;
+    }
+
     protected ArrayList<InetAddress> askForServers() {
         if(udpSocket == null){
             try {
@@ -121,5 +125,32 @@ public class ClientBack implements ConstantMessages {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public void generateMap(int lines, int columns, List<String> map){
+        if(!DisplayWindow.getInstance().getContentPane().isVisible()){
+            //System.out.println("Panel est plus visible");
+            List<Cell> cells = new ArrayList<>(lines*columns);
+            //System.out.println(map.size());
+            for(String s1: map){
+                String[] split = s1.split("");
+                for(String s2: split){
+                    //System.out.println(s2);
+                    switch (s2) {
+                        case " " -> cells.add(new NeutralPlace());
+                        case "+" -> cells.add(new HealPoint());
+                        case "*" -> cells.add(new TallGrass());
+                        default -> cells.add(new Player());
+                    }
+                }
+            }
+            DisplayWindow.getInstance().setContentPane(new MapPanel(cells));
+        }else{
+            System.out.println("Problème dans generateMap (contentPane != null)");
+        }
+    }
+
+    public void interpretMessage(String message){
+        System.out.println(message);
     }
 }
