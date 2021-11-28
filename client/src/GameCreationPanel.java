@@ -64,7 +64,7 @@ public class GameCreationPanel extends JPanel {
             if(ClientBack.getInstance().askForGameCreation(gameCreationPanel.textArea.getText())){
                 // PASSER AU PANEL DE JEU
                 DisplayWindow.getInstance().getContentPane().setVisible(false);
-                new ClientDeamon(ClientBack.getInstance().getTcpSocket()).start();
+                new ClientDeamon(ClientBack.getInstance().getTcpSocket(), ClientBack.getInstance().getSocketReader()).start();
                 //DisplayWindow.getInstance().setContentPane(new MapPanel());
             }else{
                 gameCreationPanel.infoMessage.setForeground(Color.RED);

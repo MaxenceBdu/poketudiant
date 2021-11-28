@@ -32,12 +32,16 @@ public class ClientBack implements ConstantMessages {
         return tcpSocket;
     }
 
+    public BufferedReader getSocketReader() {
+        return socketReader;
+    }
+
     protected ArrayList<InetAddress> askForServers() {
         if(udpSocket == null){
             try {
                 udpSocket = new DatagramSocket();
                 udpSocket.setBroadcast(true);
-                udpSocket.setSoTimeout(5000);
+                udpSocket.setSoTimeout(1000);
             }catch(SocketException e){
                 e.printStackTrace();
                 return null;
@@ -129,24 +133,59 @@ public class ClientBack implements ConstantMessages {
 
     public void generateMap(int lines, int columns, List<String> map){
         if(!DisplayWindow.getInstance().getContentPane().isVisible()){
-            //System.out.println("Panel est plus visible");
-            List<Cell> cells = new ArrayList<>(lines*columns);
-            //System.out.println(map.size());
-            for(String s1: map){
-                String[] split = s1.split("");
-                for(String s2: split){
-                    //System.out.println(s2);
-                    switch (s2) {
-                        case " " -> cells.add(new NeutralPlace());
-                        case "+" -> cells.add(new HealPoint());
-                        case "*" -> cells.add(new TallGrass());
-                        default -> cells.add(new Player());
+            List<Cell> cells = new ArrayList<>(15*15);
+
+            // récupérer uniquement les cases "autour" du joueur
+            int xplayer =0, yplayer = 0, xlimit1, xlimit2, ylimit1, ylimit2;
+            for(int i = 0; i < lines; i++){
+                String[] split = map.get(i).split("");
+                for(int j = 0; j < columns; j++){
+                    if(split[j].equals("0")){
+                        xplayer = j;
+                        yplayer = i;
                     }
                 }
             }
+
+            ylimit1= xplayer-7;
+            ylimit2= 15-ylimit;
+            xlimit1 = xplayer;
+            xlimit2=0;
+
+            for(int i = ylimit1; i < ylimit2; i++){
+                String[] split = map.get(i).split("");
+                for(int j = xlimit1; j < xlimit2; j++){
+                    switch (split[j]) {
+                        case "0":
+                            System.out.println("player cell");
+                            cells.add(new Player());
+                            break;
+                        case "+":
+                            System.out.println("heal cell");
+                            cells.add(new HealCell());
+                            break;
+                        case "*":
+                            System.out.println("grass cell");
+                            cells.add(new GrassCell());
+                            break;
+                        default:
+                            System.out.println("neutral cell");
+                            cells.add(new NeutralCell());
+                            break;
+                    }
+                }
+            }
+
+            for(String s1: map){
+                for(String s2: split){
+                    //System.out.println(s2);
+
+                }
+            }
             DisplayWindow.getInstance().setContentPane(new MapPanel(cells));
+            DisplayWindow.getInstance().getContentPane().setVisible(true);
         }else{
-            System.out.println("Problème dans generateMap (contentPane != null)");
+            System.out.println("Actualiser map !");
         }
     }
 
