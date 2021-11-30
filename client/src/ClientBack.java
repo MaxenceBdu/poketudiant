@@ -6,6 +6,7 @@ import java.io.PrintStream;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.awt.event.KeyEvent;
 
 public class ClientBack implements ConstantMessages {
     final int UDP_PORT = 9000;
@@ -132,6 +133,22 @@ public class ClientBack implements ConstantMessages {
         }
     }
 
+    public void askForGameJoin(String game){
+        try{
+            socketReader = new BufferedReader(new InputStreamReader(tcpSocket.getInputStream()));
+            socketPrinter = new PrintStream(tcpSocket.getOutputStream());
+
+            socketPrinter.println(JOIN_GAME+game);
+            String response = socketReader.readLine();
+
+            if(response.equals(JOIN_SUCCESS)){
+                new ClientDaemon(ClientBack.getInstance().getSocketReader()).start();
+            }
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
     public void generateMap(int lines, int columns, List<String> map){
         List<JLabel> cells = new ArrayList<>(15*15);
         boolean found = false;
@@ -212,6 +229,32 @@ public class ClientBack implements ConstantMessages {
         DisplayWindow.getInstance().displayMap(cells);
     }
 
+    public void playerMoveUp(){
+        sendPlayerAction(MOVE_UP);
+    }
+
+    public void playerMoveDown(){
+        sendPlayerAction(MOVE_DOWN);
+    }
+
+    public void playerMoveLeft(){
+        sendPlayerAction(MOVE_LEFT);
+    }
+
+    public void playerMoveRight(){
+        sendPlayerAction(MOVE_RIGHT);
+    }
+
+    public void sendPlayerAction(String move){
+        System.out.println(move);
+        try{
+            socketPrinter = new PrintStream(tcpSocket.getOutputStream());
+            socketPrinter.println(move);
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+    }
     public void interpretMessage(String message){
         System.out.println(message);
     }

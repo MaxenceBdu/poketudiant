@@ -46,7 +46,7 @@ public class MenuPanel extends JLayeredPane {
 
         gameListModel = new DefaultListModel<>();
         gameList = new JList<>(gameListModel);
-        //gameList.addListSelectionListener(new GameSelectionListener());
+        gameList.addListSelectionListener(new GameSelectionListener(gameList));
         gameList.setLayoutOrientation(JList.VERTICAL_WRAP);
         gameList.setBounds(700, 300, 200, 400);
         add(gameList);
@@ -89,6 +89,19 @@ public class MenuPanel extends JLayeredPane {
         @Override
         public void valueChanged(ListSelectionEvent e) {
             menuPanel.displayGames(ClientBack.getInstance().askForGameList(serverList.getSelectedValue()));
+        }
+    }
+
+    static class GameSelectionListener implements ListSelectionListener {
+        private final JList<String> gameList;
+
+        public GameSelectionListener(JList<String> gameList){
+            this.gameList = gameList;
+        }
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            ClientBack.getInstance().askForGameJoin(gameList.getSelectedValue());
         }
     }
 

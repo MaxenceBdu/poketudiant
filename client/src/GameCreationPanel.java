@@ -63,7 +63,7 @@ public class GameCreationPanel extends JPanel {
         public void actionPerformed(ActionEvent e) {
             if(ClientBack.getInstance().askForGameCreation(gameCreationPanel.textArea.getText())){
                 // Start the daemon
-                new ClientDaemon(ClientBack.getInstance().getTcpSocket(), ClientBack.getInstance().getSocketReader()).start();
+                new ClientDaemon(ClientBack.getInstance().getSocketReader()).start();
             }else{
                 gameCreationPanel.infoMessage.setForeground(Color.RED);
                 gameCreationPanel.infoMessage.setText("Game not created");
