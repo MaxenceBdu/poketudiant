@@ -4,12 +4,12 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientDeamon extends Thread{
+public class ClientDaemon extends Thread{
 
     private Socket socket;
     private BufferedReader socketReader;
 
-    public ClientDeamon(Socket socket, BufferedReader socketReader){
+    public ClientDaemon(Socket socket, BufferedReader socketReader){
         this.socket = socket;
         this.socketReader = socketReader;
         setDaemon(true);

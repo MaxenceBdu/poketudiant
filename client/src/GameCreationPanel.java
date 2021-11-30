@@ -62,10 +62,8 @@ public class GameCreationPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(ClientBack.getInstance().askForGameCreation(gameCreationPanel.textArea.getText())){
-                // PASSER AU PANEL DE JEU
-                DisplayWindow.getInstance().getContentPane().setVisible(false);
-                new ClientDeamon(ClientBack.getInstance().getTcpSocket(), ClientBack.getInstance().getSocketReader()).start();
-                //DisplayWindow.getInstance().setContentPane(new MapPanel());
+                // Start the daemon
+                new ClientDaemon(ClientBack.getInstance().getTcpSocket(), ClientBack.getInstance().getSocketReader()).start();
             }else{
                 gameCreationPanel.infoMessage.setForeground(Color.RED);
                 gameCreationPanel.infoMessage.setText("Game not created");

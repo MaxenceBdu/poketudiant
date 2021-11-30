@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class DisplayWindow extends JFrame{
 
@@ -36,4 +37,17 @@ public class DisplayWindow extends JFrame{
         setContentPane(menuPanel);
         homePanel = null;
     }
+
+    public void displayMap(List<JLabel> cells) {
+        if (mapPanel == null) {
+            menuPanel.setVisible(false);
+            menuPanel = null;
+
+            mapPanel = new MapPanel(cells);
+            setContentPane(mapPanel);
+        }else{
+            mapPanel.repaintMap(cells);
+        }
+    }
+
 }

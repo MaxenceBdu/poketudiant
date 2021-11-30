@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -132,61 +133,83 @@ public class ClientBack implements ConstantMessages {
     }
 
     public void generateMap(int lines, int columns, List<String> map){
-        if(!DisplayWindow.getInstance().getContentPane().isVisible()){
-            List<Cell> cells = new ArrayList<>(15*15);
+        List<JLabel> cells = new ArrayList<>(15*15);
+        boolean found = false;
 
-            // récupérer uniquement les cases "autour" du joueur
-            int xplayer =0, yplayer = 0, xlimit1, xlimit2, ylimit1, ylimit2;
-            for(int i = 0; i < lines; i++){
-                String[] split = map.get(i).split("");
-                for(int j = 0; j < columns; j++){
-                    if(split[j].equals("0")){
-                        xplayer = j;
-                        yplayer = i;
-                    }
+        // récupérer uniquement les cases "autour" du joueur
+        int xplayer =0, yplayer = 0, xlimit1, xlimit2, ylimit1, ylimit2;
+        for(int i = 0; i < lines; i++){
+            String[] split = map.get(i).split("");
+            for(int j = 0; j < columns; j++){
+                if(split[j].equals("0")){
+                    xplayer = j;
+                    yplayer = i;
+                    found = true;
+                    break;
                 }
             }
-
-            ylimit1= xplayer-7;
-            ylimit2= 15-ylimit;
-            xlimit1 = xplayer;
-            xlimit2=0;
-
-            for(int i = ylimit1; i < ylimit2; i++){
-                String[] split = map.get(i).split("");
-                for(int j = xlimit1; j < xlimit2; j++){
-                    switch (split[j]) {
-                        case "0":
-                            System.out.println("player cell");
-                            cells.add(new Player());
-                            break;
-                        case "+":
-                            System.out.println("heal cell");
-                            cells.add(new HealCell());
-                            break;
-                        case "*":
-                            System.out.println("grass cell");
-                            cells.add(new GrassCell());
-                            break;
-                        default:
-                            System.out.println("neutral cell");
-                            cells.add(new NeutralCell());
-                            break;
-                    }
-                }
+            if(found){
+                break;
             }
-
-            for(String s1: map){
-                for(String s2: split){
-                    //System.out.println(s2);
-
-                }
-            }
-            DisplayWindow.getInstance().setContentPane(new MapPanel(cells));
-            DisplayWindow.getInstance().getContentPane().setVisible(true);
-        }else{
-            System.out.println("Actualiser map !");
         }
+
+        ylimit1= yplayer - 7;
+        ylimit2= yplayer+7;
+        if(yplayer < 7) {
+            ylimit1 += 7 - yplayer;
+            ylimit2 += 7- yplayer;
+        }
+
+        if(yplayer > (lines - 7)){
+            ylimit2 -= lines - yplayer;
+            ylimit1 -= lines - yplayer;
+        }
+
+        xlimit1 = xplayer - 7;
+        xlimit2= xplayer + 7;
+        if(xlimit1 < 7){
+            xlimit1 += 7 - yplayer;
+            xlimit2 += 7 - yplayer;
+        }
+        if(xlimit2 > (columns - 7)){
+            xlimit2 -= columns - xplayer;
+            xlimit1 -= columns - xplayer;
+        }
+
+        //System.out.println(ylimit1);
+        //System.out.println(ylimit2);
+        //System.out.println(xlimit1);
+        //System.out.println(xlimit2);
+        for(int i = ylimit1; i < ylimit2+1; i++){
+            String[] split = map.get(i).split("");
+            for(int j = xlimit1; j < xlimit2+1; j++){
+                switch (split[j]) {
+                    case "0":
+                        cells.add(new Player1());
+                        break;
+                    case "1":
+                        cells.add(new Player2());
+                        break;
+                    case "2":
+                        cells.add(new Player3());
+                        break;
+                    case "3":
+                        cells.add(new Player4());
+                        break;
+                    case "+":
+                        cells.add(new HealCell());
+                        break;
+                    case "*":
+                        cells.add(new GrassCell());
+                        break;
+                    default:
+                        cells.add(new NeutralCell());
+                        break;
+                }
+            }
+        }
+        //System.out.println(cells.size());
+        DisplayWindow.getInstance().displayMap(cells);
     }
 
     public void interpretMessage(String message){

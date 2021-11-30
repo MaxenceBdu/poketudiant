@@ -2,15 +2,30 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.List;
 
-public class MapPanel extends JLayeredPane {
+public class MapPanel extends JPanel {
+    private final List<JLabel> map;
 
-    public MapPanel(List<Cell> cells){
-        //setVisible(true);
+    public MapPanel(List<JLabel> map){
+        setVisible(true);
         setBounds(200, 100,750, 750);
         setLayout(new GridLayout(15, 15));
 
-        for(int i = 0; i < 15; i++){
-            add(cells.get(i));
+        this.map = map;
+        for(JLabel c: this.map){
+            add(c);
         }
+
+    }
+
+    public void repaintMap(List<JLabel> map){
+        for(JLabel c: this.map){
+            remove(c);
+        }
+
+        for(JLabel c: map){
+            add(c);
+        }
+        revalidate();
+        repaint();
     }
 }
