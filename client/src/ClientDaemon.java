@@ -19,7 +19,7 @@ public class ClientDaemon extends Thread{
         while(true){
             try{
                 String data = socketReader.readLine();
-                System.out.println(data);
+                //System.out.println(data);
 
                 if(data.startsWith("map")){
                     //System.out.println("startsWith working");
@@ -27,8 +27,8 @@ public class ClientDaemon extends Thread{
 
                     int lines = Integer.parseInt(split[1]);
                     int columns = Integer.parseInt(split[2]);
-                    //System.out.println(lines);
-                    //System.out.println(columns);
+                    //System.out.println(lines + " " + columns);
+
                     List<String> map = new ArrayList<>(lines);
                     for(int i =0; i < lines; i++){
                         String s = socketReader.readLine();

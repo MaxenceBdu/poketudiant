@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class GameListItem extends JButton {
+public class GameListItem {
     private String gameName;
     private int players;
 
@@ -11,19 +11,11 @@ public class GameListItem extends JButton {
         this.players = players;
     }
 
-    public String getGameName() {
+    public String getName() {
         return gameName;
     }
 
     public int getPlayers() {
         return players;
-    }
-
-    static class GameListItemListener implements ActionListener {
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            // join game
-        }
     }
 }

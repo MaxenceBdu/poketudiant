@@ -9,8 +9,8 @@ import java.util.ArrayList;
 public class MenuPanel extends JLayeredPane {
     private GameCreationPanel gameCreationPanel;
 
-    private JList<String> gameList;
-    private DefaultListModel<String> gameListModel;
+    private JList<GameListItem> gameList;
+    private DefaultListModel<GameListItem> gameListModel;
 
     private JList<InetAddress> serversList;
     private DefaultListModel<InetAddress> serversListModel;
@@ -72,7 +72,7 @@ public class MenuPanel extends JLayeredPane {
         serversListModel.addAll(addresses);
     }
 
-    public void displayGames(ArrayList<String> games){
+    public void displayGames(ArrayList<GameListItem> games){
         gameListModel.clear();
         gameListModel.addAll(games);
     }
@@ -93,15 +93,15 @@ public class MenuPanel extends JLayeredPane {
     }
 
     static class GameSelectionListener implements ListSelectionListener {
-        private final JList<String> gameList;
+        private final JList<GameListItem> gameList;
 
-        public GameSelectionListener(JList<String> gameList){
+        public GameSelectionListener(JList<GameListItem> gameList){
             this.gameList = gameList;
         }
 
         @Override
         public void valueChanged(ListSelectionEvent e) {
-            ClientBack.getInstance().askForGameJoin(gameList.getSelectedValue());
+            ClientBack.getInstance().askForGameJoin(gameList.getSelectedValue().getName());
         }
     }
 

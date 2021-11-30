@@ -86,8 +86,8 @@ public class ClientBack implements ConstantMessages {
         }
     }
 
-    public ArrayList<String> askForGameList(InetAddress serverAddress){
-        ArrayList<String> games = new ArrayList<>();
+    public ArrayList<GameListItem> askForGameList(InetAddress serverAddress){
+        ArrayList<GameListItem> games = new ArrayList<>();
         try{
             if (tcpSocket != null) {
                 tcpSocket.close();
@@ -106,7 +106,8 @@ public class ClientBack implements ConstantMessages {
             int nbGames = Integer.parseInt(tab[tab.length-1]);
             if(nbGames > 0){
                 for(int i = 0; i < nbGames; i++){
-                    games.add(socketReader.readLine());
+                    String[] game = socketReader.readLine().split(" ");
+                    games.add(new GameListItem(game[1], Integer.parseInt(game[0])));
                 }
             }
 
@@ -150,15 +151,16 @@ public class ClientBack implements ConstantMessages {
     }
 
     public void generateMap(int lines, int columns, List<String> map){
-        List<JLabel> cells = new ArrayList<>(15*15);
+
         boolean found = false;
 
         // récupérer uniquement les cases "autour" du joueur
         int xplayer =0, yplayer = 0, xlimit1, xlimit2, ylimit1, ylimit2;
+
         for(int i = 0; i < lines; i++){
             String[] split = map.get(i).split("");
             for(int j = 0; j < columns; j++){
-                if(split[j].equals("0")){
+                if(split[j].equals("0")) {
                     xplayer = j;
                     yplayer = i;
                     found = true;
@@ -169,37 +171,39 @@ public class ClientBack implements ConstantMessages {
                 break;
             }
         }
+        System.out.println("xplayer= "+xplayer+", yplayer= "+yplayer);
 
-        ylimit1= yplayer - 7;
-        ylimit2= yplayer+7;
+        if(xplayer < 7) {
+            xlimit1 = 0;
+            xlimit2 = 15;
+        }else if(xplayer >= columns-8){
+            xlimit1 = columns - 15;
+            xlimit2 = columns;
+        }else{
+            xlimit1 = xplayer-7;
+            xlimit2 = xplayer+8;
+        }
+
         if(yplayer < 7) {
-            ylimit1 += 7 - yplayer;
-            ylimit2 += 7- yplayer;
+            ylimit1 = 0;
+            ylimit2 = 15;
+        }else if(yplayer >= lines-8){
+            ylimit1 = lines - 15;
+            ylimit2 = lines;
+        }else{
+            ylimit1 = yplayer-7;
+            ylimit2 = yplayer+8;
         }
 
-        if(yplayer > (lines - 7)){
-            ylimit2 -= lines - yplayer;
-            ylimit1 -= lines - yplayer;
-        }
+        //System.out.println("ylimit1: "+ylimit1);
+        //System.out.println("ylimit2: "+ylimit2);
+        //System.out.println("xlimit1: "+xlimit1);
+        //System.out.println("xlimit2: "+xlimit2);
+        List<JLabel> cells = new ArrayList<>(15*15);
 
-        xlimit1 = xplayer - 7;
-        xlimit2= xplayer + 7;
-        if(xlimit1 < 7){
-            xlimit1 += 7 - yplayer;
-            xlimit2 += 7 - yplayer;
-        }
-        if(xlimit2 > (columns - 7)){
-            xlimit2 -= columns - xplayer;
-            xlimit1 -= columns - xplayer;
-        }
-
-        //System.out.println(ylimit1);
-        //System.out.println(ylimit2);
-        //System.out.println(xlimit1);
-        //System.out.println(xlimit2);
-        for(int i = ylimit1; i < ylimit2+1; i++){
+        for(int i = ylimit1; i < ylimit2; i++){
             String[] split = map.get(i).split("");
-            for(int j = xlimit1; j < xlimit2+1; j++){
+            for(int j = xlimit1; j < xlimit2; j++){
                 switch (split[j]) {
                     case "0":
                         cells.add(new Player1());
@@ -225,7 +229,6 @@ public class ClientBack implements ConstantMessages {
                 }
             }
         }
-        //System.out.println(cells.size());
         DisplayWindow.getInstance().displayMap(cells);
     }
 
@@ -246,15 +249,9 @@ public class ClientBack implements ConstantMessages {
     }
 
     public void sendPlayerAction(String move){
-        System.out.println(move);
-        try{
-            socketPrinter = new PrintStream(tcpSocket.getOutputStream());
-            socketPrinter.println(move);
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-
+        socketPrinter.println(move);
     }
+
     public void interpretMessage(String message){
         System.out.println(message);
     }
