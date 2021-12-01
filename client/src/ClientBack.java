@@ -252,7 +252,14 @@ public class ClientBack implements ConstantMessages {
         socketPrinter.println(move);
     }
 
+    public void generateTeamDisplay(List<String> team){
+        List<JLabel> pokeTeamf
+        for(String poke : team){
+            String[] infosPoke = poke.split(" ");
+        }
+    }
+
     public void interpretMessage(String message){
-        System.out.println(message);
+
     }
 }

@@ -37,6 +37,14 @@ public class ClientDaemon extends Thread{
                     }
                     //System.out.println("map size = "+map.size());
                     ClientBack.getInstance().generateMap(lines, columns, map);
+                }else if(data.startsWith("team")){
+                    String[] split = data.split(" ");
+                    int nbPoketudiants = Integer.parseInt(split[2]);
+                    List<String> team = new ArrayList<>();
+                    for(int i = 0; i < nbPoketudiants; i++){
+                        team.add(socketReader.readLine());
+                    }
+                    ClientBack.getInstance().generateTeamDisplay(team);
                 }else{
                     ClientBack.getInstance().interpretMessage(data);
                 }

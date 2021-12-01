@@ -5,7 +5,7 @@ public class ChatPanel extends JPanel {
 
     public ChatPanel(){
         setVisible(true);
-        setBounds(1000, 100, 250, 450);
+        setBounds(1000, 75, 250, 450);
         input = new JTextArea();
         add(input);
     }

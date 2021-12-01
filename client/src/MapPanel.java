@@ -10,7 +10,7 @@ public class MapPanel extends JPanel {
 
     public MapPanel(List<JLabel> map){
         setVisible(true);
-        setBounds(200, 100,750, 750);
+        setBounds(200, 75,750, 750);
         GridLayout gl = new GridLayout(15, 15,0,0);
         gl.preferredLayoutSize(this);
         setLayout(gl);

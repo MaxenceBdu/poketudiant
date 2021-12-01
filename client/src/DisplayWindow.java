@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.List;
@@ -11,6 +10,7 @@ public class DisplayWindow extends JFrame {
     private HomePanel homePanel;
     private MenuPanel menuPanel;
     private MapPanel mapPanel;
+    private TeamPanel teamPanel;
 
     private DisplayWindow() {
         super("Pokétudiant - Boisédu & Gaudissard");
@@ -87,6 +87,12 @@ public class DisplayWindow extends JFrame {
             setContentPane(mapPanel);
         }else{
             mapPanel.repaintMap(cells);
+        }
+    }
+
+    public void displayTeam(){
+        if(teamPanel == null){
+            teamPanel = new TeamPanel();
         }
     }
 
