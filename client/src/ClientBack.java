@@ -206,25 +206,25 @@ public class ClientBack implements ConstantMessages {
             for(int j = xlimit1; j < xlimit2; j++){
                 switch (split[j]) {
                     case "0":
-                        cells.add(new Player1());
+                        cells.add(CellGenerator.generateCell(CellGenerator.CellType.PLAYER0));
                         break;
                     case "1":
-                        cells.add(new Player2());
+                        cells.add(CellGenerator.generateCell(CellGenerator.CellType.PLAYER1));
                         break;
                     case "2":
-                        cells.add(new Player3());
+                        cells.add(CellGenerator.generateCell(CellGenerator.CellType.PLAYER2));
                         break;
                     case "3":
-                        cells.add(new Player4());
+                        cells.add(CellGenerator.generateCell(CellGenerator.CellType.PLAYER3));
                         break;
                     case "+":
-                        cells.add(new HealCell());
+                        cells.add(CellGenerator.generateCell(CellGenerator.CellType.HEAL));
                         break;
                     case "*":
-                        cells.add(new GrassCell());
+                        cells.add(CellGenerator.generateCell(CellGenerator.CellType.GRASS));
                         break;
                     default:
-                        cells.add(new NeutralCell());
+                        cells.add(CellGenerator.generateCell(CellGenerator.CellType.NEUTRAL));
                         break;
                 }
             }
