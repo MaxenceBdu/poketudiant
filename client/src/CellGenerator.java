@@ -9,8 +9,6 @@ import java.util.Map;
 public class CellGenerator {
 
     private static Map<CellType, ImageIcon> map;
-    private static int cellSize = 0;
-
     public static JLabel generateCell(CellType cellType, int size){
 
         if(map == null){
