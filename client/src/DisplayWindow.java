@@ -9,18 +9,24 @@ public class DisplayWindow extends JFrame {
     private static DisplayWindow displayWindowInstance;
     private HomePanel homePanel;
     private MenuPanel menuPanel;
+    private GamePanel gamePanel;
     private MapPanel mapPanel;
     private TeamPanel teamPanel;
 
+    private boolean inGame;
+    private boolean inChat;
+
     private DisplayWindow() {
         super("Pokétudiant - Boisédu & Gaudissard");
-        setSize(1300, 900);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        this.setLocation(dim.width/2 - this.getWidth()/2, dim.height/2 - this.getHeight()/2);
+        setSize(dim);
         setResizable(true);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
-        homePanel = new HomePanel(this.getWidth(), this.getHeight());
+
+        //System.out.println(getHeight()+ " "+mainPanelSize + " " + xOffset + " "+ yOffset);
+
+        homePanel = new HomePanel(dim);
         this.setContentPane(homePanel);
         setVisible(true);
         setFocusable(true);
@@ -34,6 +40,10 @@ public class DisplayWindow extends JFrame {
         return DisplayWindow.displayWindowInstance;
     }
 
+    public GamePanel getGamePanel() {
+        return gamePanel;
+    }
+
     public void leaveHomeForMenu(){
         if(menuPanel == null) {
             menuPanel = new MenuPanel(this.getWidth(), this.getHeight());
@@ -43,7 +53,7 @@ public class DisplayWindow extends JFrame {
     }
 
     public void displayMap(List<JLabel> cells) {
-        if (mapPanel == null) {
+        if(gamePanel == null){
             menuPanel.setVisible(false);
             menuPanel = null;
 
@@ -63,7 +73,7 @@ public class DisplayWindow extends JFrame {
                 @Override
                 public void keyReleased(KeyEvent keyEvent) {
                     /* Appui touches pour déplacement */
-                    System.out.println("key listener");
+                    //System.out.println("key listener");
                     switch (keyEvent.getKeyCode()){
                         case KeyEvent.VK_Z:
                             ClientBack.getInstance().playerMoveUp();
@@ -83,18 +93,22 @@ public class DisplayWindow extends JFrame {
                 }
             });
 
-            mapPanel = new MapPanel(cells);
-            setContentPane(mapPanel);
+            gamePanel = new GamePanel(cells, getWidth(), getHeight());
+            setContentPane(gamePanel);
         }else{
-            mapPanel.repaintMap(cells);
+            gamePanel.repaintMap(cells);
         }
     }
 
-    public void displayTeam(){
-        if(teamPanel == null){
-            teamPanel = new TeamPanel();
-        }
+    public void displayTeam(List<JLabel> team){
+        gamePanel.displayTeam(team);
     }
 
+    public void goToGame(){
+        menuPanel.setVisible(false);
+        menuPanel = null;
 
+        gamePanel = new GamePanel(getWidth(), getHeight());
+        setContentPane(gamePanel);
+    }
 }

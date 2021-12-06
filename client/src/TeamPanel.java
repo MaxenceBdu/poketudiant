@@ -1,14 +1,30 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class TeamPanel extends JPanel {
 
-    private JLabel poketudiant1;
-    private JLabel poketudiant2;
-    private JLabel poketudiant3;
+    public TeamPanel(List<JLabel> team, int width, int height){
+        //System.out.println(width);
+        setVisible(true);
+        setBounds(0,0, width, height);
+        GridLayout gl = new GridLayout(3,1,0,0);
+        gl.preferredLayoutSize(this);
+        setLayout(gl);
 
-    public TeamPanel(){
-        setLayout(new GridBagLayout());
-        setBounds(25, 75,150, 750);
+        if(team != null){
+            for(JLabel j: team){
+                add(j);
+            }
+        }
+    }
+
+    public void refreshTeam(List<JLabel> team){
+        removeAll();
+        for(JLabel j: team){
+            add(j);
+        }
+        validate();
+        repaint();
     }
 }

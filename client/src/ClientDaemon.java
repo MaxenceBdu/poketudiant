@@ -22,7 +22,7 @@ public class ClientDaemon extends Thread{
                 //System.out.println(data);
 
                 if(data.startsWith("map")){
-                    //System.out.println("startsWith working");
+                    //System.out.println("map reçue");
                     String[] split = data.split(" ");
 
                     int lines = Integer.parseInt(split[1]);
@@ -38,11 +38,14 @@ public class ClientDaemon extends Thread{
                     //System.out.println("map size = "+map.size());
                     ClientBack.getInstance().generateMap(lines, columns, map);
                 }else if(data.startsWith("team")){
+                    //System.out.println("Team trouvée");
                     String[] split = data.split(" ");
                     int nbPoketudiants = Integer.parseInt(split[2]);
                     List<String> team = new ArrayList<>();
                     for(int i = 0; i < nbPoketudiants; i++){
-                        team.add(socketReader.readLine());
+                        String s = socketReader.readLine();
+                        //System.out.println(s);
+                        team.add(s);
                     }
                     ClientBack.getInstance().generateTeamDisplay(team);
                 }else{

@@ -6,28 +6,30 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 
-public class HomePanel extends JPanel {
+public class HomePanel extends JLayeredPane {
 
-    public HomePanel(int width, int height){
+    public HomePanel(Dimension dim){
         setLayout(null);
-        setSize(width, height);
-        JButton play = new JButton("Play");
-        play.setSize(play.getMaximumSize());
-        play.setLocation(100,100);
+        setSize(dim);
+        JButton play = new JButton("Explorer les serveurs");
+        play.setContentAreaFilled(false);
+        play.setOpaque(false);
+        play.setLocation(getWidth()/6,getHeight()/2);
         play.addActionListener(new PlayButtonListener());
+        play.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
+        play.setForeground(Color.WHITE);
+        play.setSize(play.getMaximumSize());
+        add(play, PALETTE_LAYER);
 
-        /*
         try{
-            Image image = new ImageIcon(ImageIO.read(new File("src/assets/menu-bg.jpg"))).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            Image image = new ImageIcon(ImageIO.read(new File("src/assets/menu-bg.jpg"))).getImage().getScaledInstance(getWidth()/15, getHeight()/15, Image.SCALE_SMOOTH);
             JLabel background = new JLabel(new ImageIcon(image));
-            background.setSize(width, height);
+            background.setSize(getWidth()/15, getHeight()/15);
             background.setLocation(0,0);
-            //background.setVisible(true);
-            add(background);
+            add(background, DEFAULT_LAYER);
         }catch(IOException e){
             e.printStackTrace();
-        }*/
-        this.add(play);
+        }
     }
 
 

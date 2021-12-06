@@ -62,6 +62,7 @@ public class GameCreationPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent e) {
             if(ClientBack.getInstance().askForGameCreation(gameCreationPanel.textArea.getText())){
+                DisplayWindow.getInstance().goToGame();
                 // Start the daemon
                 new ClientDaemon(ClientBack.getInstance().getSocketReader()).start();
             }else{

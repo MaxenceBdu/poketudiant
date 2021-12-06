@@ -7,6 +7,7 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.KeyEvent;
+import java.util.Locale;
 
 public class ClientBack implements ConstantMessages {
     final int UDP_PORT = 9000;
@@ -171,7 +172,7 @@ public class ClientBack implements ConstantMessages {
                 break;
             }
         }
-        System.out.println("xplayer= "+xplayer+", yplayer= "+yplayer);
+        //System.out.println("xplayer= "+xplayer+", yplayer= "+yplayer);
 
         if(xplayer < 7) {
             xlimit1 = 0;
@@ -200,31 +201,31 @@ public class ClientBack implements ConstantMessages {
         //System.out.println("xlimit1: "+xlimit1);
         //System.out.println("xlimit2: "+xlimit2);
         List<JLabel> cells = new ArrayList<>(15*15);
-
+        int size = DisplayWindow.getInstance().getGamePanel().getMainPanelSize()/15;
         for(int i = ylimit1; i < ylimit2; i++){
             String[] split = map.get(i).split("");
             for(int j = xlimit1; j < xlimit2; j++){
                 switch (split[j]) {
                     case "0":
-                        cells.add(CellGenerator.generateCell(CellGenerator.CellType.PLAYER0));
+                        cells.add(CellGenerator.generateCell(CellGenerator.CellType.PLAYER0, size));
                         break;
                     case "1":
-                        cells.add(CellGenerator.generateCell(CellGenerator.CellType.PLAYER1));
+                        cells.add(CellGenerator.generateCell(CellGenerator.CellType.PLAYER1, size));
                         break;
                     case "2":
-                        cells.add(CellGenerator.generateCell(CellGenerator.CellType.PLAYER2));
+                        cells.add(CellGenerator.generateCell(CellGenerator.CellType.PLAYER2, size));
                         break;
                     case "3":
-                        cells.add(CellGenerator.generateCell(CellGenerator.CellType.PLAYER3));
+                        cells.add(CellGenerator.generateCell(CellGenerator.CellType.PLAYER3, size));
                         break;
                     case "+":
-                        cells.add(CellGenerator.generateCell(CellGenerator.CellType.HEAL));
+                        cells.add(CellGenerator.generateCell(CellGenerator.CellType.HEAL, size));
                         break;
                     case "*":
-                        cells.add(CellGenerator.generateCell(CellGenerator.CellType.GRASS));
+                        cells.add(CellGenerator.generateCell(CellGenerator.CellType.GRASS, size));
                         break;
                     default:
-                        cells.add(CellGenerator.generateCell(CellGenerator.CellType.NEUTRAL));
+                        cells.add(CellGenerator.generateCell(CellGenerator.CellType.NEUTRAL, size));
                         break;
                 }
             }
@@ -253,10 +254,51 @@ public class ClientBack implements ConstantMessages {
     }
 
     public void generateTeamDisplay(List<String> team){
-        List<JLabel> pokeTeamf
+        List<JLabel> pokeTeam = new ArrayList<>();
+        int size = DisplayWindow.getInstance().getHeight()/3 - 10;
+        //System.out.println("team labels size = "+size);
         for(String poke : team){
             String[] infosPoke = poke.split(" ");
+            switch (infosPoke[0].toUpperCase()){
+                case "PARLFOR":
+                    pokeTeam.add(SpriteManager.generatePoketudiant(PoketudiantVariety.PARLFOR, size));
+                    break;
+                case "ISMAR":
+                    pokeTeam.add(SpriteManager.generatePoketudiant(PoketudiantVariety.ISMAR, size));
+                    break;
+                case "RIGOLAMOR":
+                    pokeTeam.add(SpriteManager.generatePoketudiant(PoketudiantVariety.RIGOLAMOR, size));
+                    break;
+                case "PROCRASTINO":
+                    pokeTeam.add(SpriteManager.generatePoketudiant(PoketudiantVariety.PROCRASTINO, size));
+                    break;
+                case "COUCHTAR":
+                    pokeTeam.add(SpriteManager.generatePoketudiant(PoketudiantVariety.COUCHTAR, size));
+                    break;
+                case "NUIDEBOU":
+                    pokeTeam.add(SpriteManager.generatePoketudiant(PoketudiantVariety.NUIDEBOU, size));
+                    break;
+                case "ALABOURRE":
+                    pokeTeam.add(SpriteManager.generatePoketudiant(PoketudiantVariety.ALABOURRE, size));
+                    break;
+                case "BUCHAFON":
+                    pokeTeam.add(SpriteManager.generatePoketudiant(PoketudiantVariety.BUCHAFON, size));
+                    break;
+                case "BELMENTION":
+                    pokeTeam.add(SpriteManager.generatePoketudiant(PoketudiantVariety.BELMENTION, size));
+                    break;
+                case "PROMOMAJOR":
+                    pokeTeam.add(SpriteManager.generatePoketudiant(PoketudiantVariety.PROMOMAJOR, size));
+                    break;
+                case "ENSEIGNANT-DRESSEUR":
+                    pokeTeam.add(SpriteManager.generatePoketudiant(PoketudiantVariety.ENSEIGNANT, size));
+                    break;
+                default:
+                    break;
+            }
         }
+        System.out.println(pokeTeam.size());
+        DisplayWindow.getInstance().displayTeam(pokeTeam);
     }
 
     public void interpretMessage(String message){

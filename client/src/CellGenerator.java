@@ -9,8 +9,10 @@ import java.util.Map;
 public class CellGenerator {
 
     private static Map<CellType, ImageIcon> map;
+    private static int cellSize = 0;
 
-    public static JLabel generateCell(CellType cellType){
+    public static JLabel generateCell(CellType cellType, int size){
+
         if(map == null){
             map = new EnumMap<>(CellType.class);
             map.put(CellType.HEAL, null);
@@ -25,7 +27,7 @@ public class CellGenerator {
         if(map.get(cellType) == null){
             map.remove(cellType);
             try{
-                map.put(cellType, new ImageIcon(new ImageIcon(ImageIO.read(new File("src/assets/"+cellType.name()+".jpg"))).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH)));
+                map.put(cellType, new ImageIcon(new ImageIcon(ImageIO.read(new File("src/assets/"+cellType.name()+".jpg"))).getImage().getScaledInstance(size, size, Image.SCALE_SMOOTH)));
             }catch (IOException e){
                 e.printStackTrace();
             }

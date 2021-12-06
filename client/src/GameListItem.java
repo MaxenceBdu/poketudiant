@@ -18,4 +18,9 @@ public class GameListItem {
     public int getPlayers() {
         return players;
     }
+
+    @Override
+    public String toString() {
+        return gameName + " (" + players + ")";
+    }
 }

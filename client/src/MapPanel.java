@@ -8,15 +8,17 @@ import java.util.List;
 public class MapPanel extends JPanel {
 
 
-    public MapPanel(List<JLabel> map){
+    public MapPanel(List<JLabel> map, int size, int xOffset, int yOffset){
         setVisible(true);
-        setBounds(200, 75,750, 750);
+        setBounds(xOffset,yOffset, size, size);
         GridLayout gl = new GridLayout(15, 15,0,0);
         gl.preferredLayoutSize(this);
         setLayout(gl);
 
-        for(JLabel c: map){
-            add(c);
+        if(map != null){
+            for(JLabel c: map){
+                add(c);
+            }
         }
     }
 
