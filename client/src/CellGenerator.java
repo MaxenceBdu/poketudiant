@@ -25,7 +25,7 @@ public class CellGenerator {
         if(map.get(cellType) == null){
             map.remove(cellType);
             try{
-                map.put(cellType, new ImageIcon(new ImageIcon(ImageIO.read(new File("src/assets/"+cellType.name()+".jpg"))).getImage().getScaledInstance(size, size, Image.SCALE_SMOOTH)));
+                map.put(cellType, new ImageIcon(new ImageIcon(ImageIO.read(new File("src/assets/"+cellType.name()+".png"))).getImage().getScaledInstance(size, size, Image.SCALE_SMOOTH)));
             }catch (IOException e){
                 e.printStackTrace();
             }
