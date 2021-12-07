@@ -1,0 +1,1 @@
+CommandType = {"CONNECT":1,"GAME":2,"BATTLE":3}

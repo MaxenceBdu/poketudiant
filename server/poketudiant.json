@@ -1,0 +1,90 @@
+{
+    "Parlfor" : {
+        "type" : "Noisy",
+        "Capturable" : 1,
+        "Evolution" : "",
+        "Attaque" : 60,
+        "Defense" : 40,
+        "PV" : 60
+    },
+    "Ismar" : {
+        "type" : "Noisy",
+        "Capturable" : 1,
+        "Evolution" : "Rigolamor",
+        "Attaque" : 50,
+        "Defense" : 30,
+        "PV" : 40
+    },
+    "Rigolamor" : {
+        "type" : "Noisy",
+        "Capturable" : 0,
+        "Evolution" : "Rigolamor",
+        "Attaque" : 85,
+        "Defense" : 55,
+        "PV" : 70
+    },
+    "Procrastino" : {
+        "type" : "Lazy",
+        "Capturable" : 1,
+        "Evolution" : "",
+        "Attaque" : 40,
+        "Defense" : 60,
+        "PV" : 60
+    },
+    "Couchtar" : {
+        "type" : "Lazy",
+        "Capturable" : 1,
+        "Evolution" : "Nuidebou",
+        "Attaque" : 30,
+        "Defense" : 50,
+        "PV" : 40
+    },
+    "Nuidebou" : {
+        "type" : "Lazy",
+        "Capturable" : 0,
+        "Evolution" : "",
+        "Attaque" : 55,
+        "Defense" : 85,
+        "PV" : 70
+    },
+    "Alabourre" : {
+        "type" : "Lazy",
+        "Capturable" : 1,
+        "Evolution" : "",
+        "Attaque" : 75,
+        "Defense" : 95,
+        "PV" : 65
+    },
+    "Buchafon" : {
+        "type" : "Motivated",
+        "Capturable" : 1,
+        "Evolution" : "",
+        "Attaque" : 50,
+        "Defense" : 50,
+        "PV" : 60
+    },
+    "Belmention" : {
+        "type" : "Motivated",
+        "Capturable" : 1,
+        "Evolution" : "Promomajor",
+        "Attaque" : 30,
+        "Defense" : 50,
+        "PV" : 40
+    },
+    "Promomajpr" : {
+        "type" : "Motivated",
+        "Capturable" : 0,
+        "Evolution" : "",
+        "Attaque" : 70,
+        "Defense" : 70,
+        "PV" : 70
+    },
+    "Enseignant-dresseur" : {
+        "type" : "Teacher",
+        "Capturable" : 0,
+        "Evolution" : "",
+        "Attaque" : 100,
+        "Defense" : 100,
+        "PV" : 100
+    }
+}
