@@ -55,6 +55,7 @@ public class MenuPanel extends JLayeredPane {
         cr.setSize(cr.getMaximumSize());
         cr.setLocation(800, 0);
         add(cr);
+
     }
 
     public void showGameCreationPanel(){

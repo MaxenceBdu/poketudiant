@@ -38,7 +38,7 @@ public class ClientDaemon extends Thread{
                     //System.out.println("map size = "+map.size());
                     ClientBack.getInstance().generateMap(lines, columns, map);
                 }else if(data.startsWith("team")){
-                    //System.out.println("Team trouvée");
+                    //System.out.println("Team reçue");
                     String[] split = data.split(" ");
                     int nbPoketudiants = Integer.parseInt(split[2]);
                     List<String> team = new ArrayList<>();
@@ -54,7 +54,7 @@ public class ClientDaemon extends Thread{
             }catch(SocketTimeoutException e){
                 // Do nothing
             }catch(IOException e){
-                System.out.println(e.getMessage());
+                //System.out.println(e.getMessage());
             }
 
         }

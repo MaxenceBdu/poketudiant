@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.List;
 
 public class GamePanel extends JPanel {
@@ -19,6 +21,8 @@ public class GamePanel extends JPanel {
 
         mapPanel = new MapPanel(map, mainPanelSize, xOffset, yOffset);
         add(mapPanel);
+
+
     }
 
     public GamePanel(int width, int height){
@@ -41,6 +45,10 @@ public class GamePanel extends JPanel {
         return mainPanelSize;
     }
 
+    public int getxOffset(){
+        return xOffset;
+    }
+
     private int calculateMainPanelSize(int width, int height){
         int maxWidth = width/5*3;
         boolean found = false;
@@ -60,7 +68,7 @@ public class GamePanel extends JPanel {
         mapPanel.repaintMap(map);
     }
 
-    public void displayTeam(List<JLabel> team){
+    public void displayTeam(List<TeamItem> team){
         teamPanel.refreshTeam(team);
     }
 }

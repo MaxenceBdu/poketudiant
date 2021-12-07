@@ -1,6 +1,6 @@
 ConstantMessage = {
     "CLIENT_SEARCH" : "looking for poketudiant servers",
-    "SERVER_SEARCH_RESPONSE" : "i'm a poketudiant server\n",
+    "SERVER_SEARCH_RESPONSE" : "i'm a poketudiant server",
 
     "CLIENT_RGAMELIST" : "require game list",
     "CLIENT_RGAMECREA" : "create game",

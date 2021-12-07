@@ -4,7 +4,7 @@ import java.util.List;
 
 public class TeamPanel extends JPanel {
 
-    public TeamPanel(List<JLabel> team, int width, int height){
+    public TeamPanel(List<TeamItem> team, int width, int height){
         //System.out.println(width);
         setVisible(true);
         setBounds(0,0, width, height);
@@ -13,16 +13,16 @@ public class TeamPanel extends JPanel {
         setLayout(gl);
 
         if(team != null){
-            for(JLabel j: team){
-                add(j);
+            for(TeamItem ti: team){
+                add(ti);
             }
         }
     }
 
-    public void refreshTeam(List<JLabel> team){
+    public void refreshTeam(List<TeamItem> team){
         removeAll();
-        for(JLabel j: team){
-            add(j);
+        for(TeamItem ti: team){
+            add(ti);
         }
         validate();
         repaint();

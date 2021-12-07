@@ -22,9 +22,9 @@ public class HomePanel extends JLayeredPane {
         add(play, PALETTE_LAYER);
 
         try{
-            Image image = new ImageIcon(ImageIO.read(new File("src/assets/menu-bg.jpg"))).getImage().getScaledInstance(getWidth()/15, getHeight()/15, Image.SCALE_SMOOTH);
+            Image image = new ImageIcon(ImageIO.read(new File("src/assets/menu-bg.jpg"))).getImage().getScaledInstance(dim.width, dim.height, Image.SCALE_SMOOTH);
             JLabel background = new JLabel(new ImageIcon(image));
-            background.setSize(getWidth()/15, getHeight()/15);
+            background.setSize(dim.width, dim.height);
             background.setLocation(0,0);
             add(background, DEFAULT_LAYER);
         }catch(IOException e){

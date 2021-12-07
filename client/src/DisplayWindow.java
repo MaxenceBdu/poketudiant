@@ -57,42 +57,6 @@ public class DisplayWindow extends JFrame {
             menuPanel.setVisible(false);
             menuPanel = null;
 
-            requestFocus();
-            addKeyListener(new KeyListener() {
-                /* FUNCTIONS FROM KEYLISTENER */
-                @Override
-                public void keyTyped(KeyEvent keyEvent) {
-                    // Empty
-                }
-
-                @Override
-                public void keyPressed(KeyEvent keyEvent) {
-                    // Empty
-                }
-
-                @Override
-                public void keyReleased(KeyEvent keyEvent) {
-                    /* Appui touches pour déplacement */
-                    //System.out.println("key listener");
-                    switch (keyEvent.getKeyCode()){
-                        case KeyEvent.VK_Z:
-                            ClientBack.getInstance().playerMoveUp();
-                            break;
-                        case KeyEvent.VK_Q:
-                            ClientBack.getInstance().playerMoveLeft();
-                            break;
-                        case KeyEvent.VK_S:
-                            ClientBack.getInstance().playerMoveDown();
-                            break;
-                        case KeyEvent.VK_D:
-                            ClientBack.getInstance().playerMoveRight();
-                            break;
-                        default:
-                            break;
-                    }
-                }
-            });
-
             gamePanel = new GamePanel(cells, getWidth(), getHeight());
             setContentPane(gamePanel);
         }else{
@@ -100,7 +64,7 @@ public class DisplayWindow extends JFrame {
         }
     }
 
-    public void displayTeam(List<JLabel> team){
+    public void displayTeam(List<TeamItem> team){
         gamePanel.displayTeam(team);
     }
 
@@ -110,5 +74,41 @@ public class DisplayWindow extends JFrame {
 
         gamePanel = new GamePanel(getWidth(), getHeight());
         setContentPane(gamePanel);
+
+        /* KeyListener here because not working in gamePanel */
+        addKeyListener(new KeyListener() {
+
+            @Override
+            public void keyTyped(KeyEvent keyEvent) {
+                // Empty
+            }
+
+            @Override
+            public void keyPressed(KeyEvent keyEvent) {
+                // Empty
+            }
+
+            @Override
+            public void keyReleased(KeyEvent keyEvent) {
+                /* Appui touches pour déplacement */
+                //System.out.println("key listener");
+                switch (keyEvent.getKeyCode()){
+                    case KeyEvent.VK_Z:
+                        ClientBack.getInstance().playerMoveUp();
+                        break;
+                    case KeyEvent.VK_Q:
+                        ClientBack.getInstance().playerMoveLeft();
+                        break;
+                    case KeyEvent.VK_S:
+                        ClientBack.getInstance().playerMoveDown();
+                        break;
+                    case KeyEvent.VK_D:
+                        ClientBack.getInstance().playerMoveRight();
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
     }
 }

@@ -253,51 +253,65 @@ public class ClientBack implements ConstantMessages {
         socketPrinter.println(move);
     }
 
+    public void sendPoketudiantMove(int id, String direction){
+        socketPrinter.println("poketudiant "+id+" move "+direction);
+    }
+
+    public void sendPoketudiantFree(int id){
+        socketPrinter.println("poketudiant "+id+" free");
+    }
+
     public void generateTeamDisplay(List<String> team){
-        List<JLabel> pokeTeam = new ArrayList<>();
-        int size = DisplayWindow.getInstance().getHeight()/3 - 10;
-        //System.out.println("team labels size = "+size);
+        List<TeamItem> pokeTeam = new ArrayList<>();
+        int sizeImage = (int) (DisplayWindow.getInstance().getGamePanel().getxOffset()*0.65);
+        int cpt = 0;
         for(String poke : team){
             String[] infosPoke = poke.split(" ");
+            String lvl = infosPoke[2];
+            String currentXp = infosPoke[3];
+            String xpNextLvl = infosPoke[4];
+            String currentPv = infosPoke[5];
+            String maxPv = infosPoke[6];
             switch (infosPoke[0].toUpperCase()){
                 case "PARLFOR":
-                    pokeTeam.add(SpriteManager.generatePoketudiant(PoketudiantVariety.PARLFOR, size));
+                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantVariety.PARLFOR, sizeImage), cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
                     break;
                 case "ISMAR":
-                    pokeTeam.add(SpriteManager.generatePoketudiant(PoketudiantVariety.ISMAR, size));
+                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantVariety.ISMAR, sizeImage), cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
                     break;
                 case "RIGOLAMOR":
-                    pokeTeam.add(SpriteManager.generatePoketudiant(PoketudiantVariety.RIGOLAMOR, size));
+                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantVariety.RIGOLAMOR, sizeImage), cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
                     break;
                 case "PROCRASTINO":
-                    pokeTeam.add(SpriteManager.generatePoketudiant(PoketudiantVariety.PROCRASTINO, size));
+                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantVariety.PROCRASTINO, sizeImage),cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
                     break;
                 case "COUCHTAR":
-                    pokeTeam.add(SpriteManager.generatePoketudiant(PoketudiantVariety.COUCHTAR, size));
+                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantVariety.COUCHTAR, sizeImage), cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
                     break;
                 case "NUIDEBOU":
-                    pokeTeam.add(SpriteManager.generatePoketudiant(PoketudiantVariety.NUIDEBOU, size));
+                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantVariety.NUIDEBOU, sizeImage),cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
                     break;
                 case "ALABOURRE":
-                    pokeTeam.add(SpriteManager.generatePoketudiant(PoketudiantVariety.ALABOURRE, size));
+                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantVariety.ALABOURRE, sizeImage),cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
                     break;
                 case "BUCHAFON":
-                    pokeTeam.add(SpriteManager.generatePoketudiant(PoketudiantVariety.BUCHAFON, size));
+                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantVariety.BUCHAFON, sizeImage),cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
                     break;
                 case "BELMENTION":
-                    pokeTeam.add(SpriteManager.generatePoketudiant(PoketudiantVariety.BELMENTION, size));
+                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantVariety.BELMENTION, sizeImage),cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
                     break;
                 case "PROMOMAJOR":
-                    pokeTeam.add(SpriteManager.generatePoketudiant(PoketudiantVariety.PROMOMAJOR, size));
+                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantVariety.PROMOMAJOR, sizeImage),cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
                     break;
                 case "ENSEIGNANT-DRESSEUR":
-                    pokeTeam.add(SpriteManager.generatePoketudiant(PoketudiantVariety.ENSEIGNANT, size));
+                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantVariety.ENSEIGNANT, sizeImage),cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
                     break;
                 default:
                     break;
             }
+            cpt++;
         }
-        System.out.println(pokeTeam.size());
+        //System.out.println(pokeTeam.size());
         DisplayWindow.getInstance().displayTeam(pokeTeam);
     }
 
