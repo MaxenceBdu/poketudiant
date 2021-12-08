@@ -342,6 +342,8 @@ public class ClientBack implements ConstantMessages {
                         DisplayWindow.getInstance().getGamePanel().getFightPanel().displayOpponentPoketudiant(sprite, realVariety, pv, lvl);
                     }
                 }else if(split[2].equals("xp")){
+                    System.out.println("gain d'xp");
+                    DisplayWindow.getInstance().getGamePanel().getFightPanel().xpNotification(split[3], split[4]);
                     // Notify player the amount of xp earned
                 }else if(split[2].equals("lvl")){
                     // Notify the up of level
