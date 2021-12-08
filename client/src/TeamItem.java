@@ -9,14 +9,14 @@ public class TeamItem extends JPanel {
         add(new JLabel(currentPV+"/"+maxPV));
         switch(id){
             case 0:
-                add(new PoketudiantMoveButton(id, PoketudiantMoveButton.MoveDirection.down));
+                add(new PoketudiantMoveButton(id, PoketudiantMoveButton.MoveDirection.descendre));
                 break;
             case 1:
-                add(new PoketudiantMoveButton(id, PoketudiantMoveButton.MoveDirection.down));
-                add(new PoketudiantMoveButton(id, PoketudiantMoveButton.MoveDirection.up));
+                add(new PoketudiantMoveButton(id, PoketudiantMoveButton.MoveDirection.descendre));
+                add(new PoketudiantMoveButton(id, PoketudiantMoveButton.MoveDirection.monter));
                 break;
             case 2:
-                add(new PoketudiantMoveButton(id, PoketudiantMoveButton.MoveDirection.up));
+                add(new PoketudiantMoveButton(id, PoketudiantMoveButton.MoveDirection.monter));
                 break;
             default:
                 break;

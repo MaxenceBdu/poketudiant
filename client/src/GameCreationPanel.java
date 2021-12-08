@@ -5,10 +5,8 @@ import java.awt.event.ActionListener;
 
 public class GameCreationPanel extends JPanel {
 
-    private JTextArea textArea;
-    private JButton validateButton;
-    private JButton cancelButton;
-    private JLabel infoMessage;
+    private final JTextArea textArea;
+    private final JLabel infoMessage;
 
     GameCreationPanel(){
         setLayout(null);
@@ -18,13 +16,13 @@ public class GameCreationPanel extends JPanel {
         textArea.setBounds(20,20, 100, 50);
         add(textArea);
 
-        cancelButton = new JButton("Cancel");
+        JButton cancelButton = new JButton("Annuler");
         cancelButton.addActionListener(new CancelButtonListener(this));
         cancelButton.setSize(cancelButton.getMaximumSize());
         cancelButton.setLocation(200,100);
         add(cancelButton);
 
-        validateButton = new JButton("Validate");
+        JButton validateButton = new JButton("Valider");
         validateButton.addActionListener(new ValidateButtonListener(this));
         validateButton.setSize(validateButton.getMaximumSize());
         validateButton.setLocation(30, 100);

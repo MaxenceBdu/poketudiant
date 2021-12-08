@@ -10,17 +10,17 @@ public class MenuPanel extends JLayeredPane {
     private GameCreationPanel gameCreationPanel;
 
     private JList<GameListItem> gameList;
-    private DefaultListModel<GameListItem> gameListModel;
+    private final DefaultListModel<GameListItem> gameListModel;
 
     private JList<InetAddress> serversList;
-    private DefaultListModel<InetAddress> serversListModel;
+    private final DefaultListModel<InetAddress> serversListModel;
 
     public MenuPanel(int width, int height){
         setLayout(null);
         setSize(width, height);
 
         /* Servers part */
-        JLabel label = new JLabel("Servers");
+        JLabel label = new JLabel("Serveurs");
         label.setSize(label.getMaximumSize());
         label.setLocation(0,0);
         add(label);
@@ -39,7 +39,7 @@ public class MenuPanel extends JLayeredPane {
 
 
         /* Games part */
-        JLabel title = new JLabel("Games");
+        JLabel title = new JLabel("Parties");
         title.setSize(title.getMaximumSize());
         title.setLocation(700, 10);
         add(title);
@@ -108,7 +108,7 @@ public class MenuPanel extends JLayeredPane {
 
     static class RefreshButton extends JButton {
         public RefreshButton(MenuPanel menuPanel){
-            this.setText("Search for servers");
+            this.setText("Chercher des serveurs");
             this.addActionListener(new RefreshButtonListener(menuPanel));
         }
 

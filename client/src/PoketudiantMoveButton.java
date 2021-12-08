@@ -25,6 +25,6 @@ public class PoketudiantMoveButton extends JButton {
     }
 
     public enum MoveDirection{
-        up,down
+        monter,descendre
     }
 }
