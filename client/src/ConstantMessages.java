@@ -1,6 +1,6 @@
 public interface ConstantMessages {
     String LOOKING_FOR_SERVERS = "looking for poketudiant servers";
-    String SERVER_FOUND = "i'm a poketudiant server";
+    String SERVER_FOUND = "i'm a poketudiant server\n";
     String ASK_GAME_LIST = "require game list";
     String CREATE_GAME = "create game ";
     String JOIN_GAME = "join game ";
