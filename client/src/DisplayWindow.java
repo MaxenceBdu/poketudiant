@@ -111,4 +111,11 @@ public class DisplayWindow extends JFrame {
             }
         });
     }
+
+    public void displayFight(){
+        if(gamePanel != null){
+            gamePanel.displayFight();
+            //this.removeKeyListener(this.getKeyListeners()[0]);
+        }
+    }
 }

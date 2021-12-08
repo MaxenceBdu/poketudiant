@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 public class PoketudiantFreeButton extends JButton {
 
     public PoketudiantFreeButton(int id){
-        setText("FREE");
+        setText("LIBERER");
         addActionListener(new PoketudiantFreeButtonListener(id));
     }
 

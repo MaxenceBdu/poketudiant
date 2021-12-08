@@ -44,12 +44,12 @@ public class ClientDaemon extends Thread{
                     List<String> team = new ArrayList<>();
                     for(int i = 0; i < nbPoketudiants; i++){
                         String s = socketReader.readLine();
-                        //System.out.println(s);
                         team.add(s);
                     }
                     ClientBack.getInstance().generateTeamDisplay(team);
                 }else{
-                    ClientBack.getInstance().interpretMessage(data);
+                    // It's an 'encounter' message (or blank message ????? (issue with teacher's server))
+                    ClientBack.getInstance().interpretFightMessage(data);
                 }
             }catch(SocketTimeoutException e){
                 // Do nothing
@@ -58,7 +58,5 @@ public class ClientDaemon extends Thread{
             }
 
         }
-
-
     }
 }

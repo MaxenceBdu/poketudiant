@@ -11,18 +11,26 @@ public class HomePanel extends JLayeredPane {
     public HomePanel(Dimension dim){
         setLayout(null);
         setSize(dim);
+
+        JLabel title = new JLabel("<html>Bienvenue sur le pokétudiant <br/> de Florian Gaudissard et Maxence Boisédu</html>");
+        title.setFont(new Font(Font.SERIF, Font.PLAIN, 50));
+        title.setForeground(Color.WHITE);
+        title.setLocation(dim.width/15, dim.height/5);
+        title.setSize(title.getMaximumSize());
+        add(title, PALETTE_LAYER);
         JButton play = new JButton("Explorer les serveurs");
         play.setContentAreaFilled(false);
         play.setOpaque(false);
-        play.setLocation(getWidth()/6,getHeight()/2);
+        play.setLocation(dim.width/6,dim.height/2);
         play.addActionListener(new PlayButtonListener());
         play.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
         play.setForeground(Color.WHITE);
         play.setSize(play.getMaximumSize());
+        play.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
         add(play, PALETTE_LAYER);
 
         try{
-            Image image = new ImageIcon(ImageIO.read(new File("src/assets/menu-bg.jpg"))).getImage().getScaledInstance(dim.width, dim.height, Image.SCALE_SMOOTH);
+            Image image = new ImageIcon(ImageIO.read(new File("src/assets/FOND-ACCUEIL.jpg"))).getImage().getScaledInstance(dim.width, dim.height, Image.SCALE_SMOOTH);
             JLabel background = new JLabel(new ImageIcon(image));
             background.setSize(dim.width, dim.height);
             background.setLocation(0,0);

@@ -6,8 +6,6 @@ import java.io.PrintStream;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.awt.event.KeyEvent;
-import java.util.Locale;
 
 public class ClientBack implements ConstantMessages {
     final int UDP_PORT = 9000;
@@ -29,10 +27,6 @@ public class ClientBack implements ConstantMessages {
         }
 
         return clientBackInstance;
-    }
-
-    public Socket getTcpSocket(){
-        return tcpSocket;
     }
 
     public BufferedReader getSocketReader() {
@@ -315,7 +309,13 @@ public class ClientBack implements ConstantMessages {
         DisplayWindow.getInstance().displayTeam(pokeTeam);
     }
 
-    public void interpretMessage(String message){
-
+    public void interpretFightMessage(String message){
+        if(!message.isBlank()){
+            //System.out.println(message);
+            String[] split = message.split(" ");
+            if(split[1].equals("new")){
+                DisplayWindow.getInstance().displayFight();
+            }
+        }
     }
 }

@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.InetAddress;
@@ -18,6 +19,7 @@ public class MenuPanel extends JLayeredPane {
     public MenuPanel(int width, int height){
         setLayout(null);
         setSize(width, height);
+        setBackground(new Color(115,115,255));
 
         /* Servers part */
         JLabel label = new JLabel("Serveurs");
@@ -29,14 +31,13 @@ public class MenuPanel extends JLayeredPane {
         serversList = new JList<>(serversListModel);
         serversList.addListSelectionListener(new ServerSelectionListener(serversList, this));
         serversList.setLayoutOrientation(JList.VERTICAL_WRAP);
-        serversList.setBounds(0, 300, 200, 400);
+        serversList.setBounds(0, 300, 400, 400);
         add(serversList);
 
         RefreshButton rb = new RefreshButton(this);
         rb.setSize(rb.getMaximumSize());
         rb.setLocation(0, 100);
         add(rb);
-
 
         /* Games part */
         JLabel title = new JLabel("Parties");

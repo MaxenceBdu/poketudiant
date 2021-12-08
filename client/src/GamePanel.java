@@ -1,13 +1,12 @@
 import javax.swing.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.List;
 
 public class GamePanel extends JPanel {
 
     private TeamPanel teamPanel;
     private final MapPanel mapPanel;
-    private ChatPanel chatPanel;
+    private FightPanel fightPanel;
+    //private ChatPanel chatPanel;
     private final int mainPanelSize,yOffset, xOffset;
 
     public GamePanel(List<JLabel> map, int width, int height){
@@ -70,5 +69,20 @@ public class GamePanel extends JPanel {
 
     public void displayTeam(List<TeamItem> team){
         teamPanel.refreshTeam(team);
+    }
+
+    public void displayFight(){
+        if(fightPanel == null){
+            fightPanel = new FightPanel(mainPanelSize, xOffset, yOffset);
+            add(fightPanel);
+        }
+        mapPanel.setVisible(false);
+        //fightPanel.setDisplay();
+        fightPanel.setVisible(true);
+    }
+
+    public void displayMap(){
+        fightPanel.setVisible(false);
+        mapPanel.setVisible(true);
     }
 }
