@@ -11,4 +11,5 @@ public interface ConstantMessages {
     String MOVE_RIGHT = "map move right";
     String MOVE_UP = "map move up";
     String MOVE_DOWN = "map move down";
+    String PLAYER_ACTION = "encounter action ";
 }

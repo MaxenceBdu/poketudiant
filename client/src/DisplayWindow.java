@@ -20,11 +20,9 @@ public class DisplayWindow extends JFrame {
         super("Pokétudiant - Boisédu & Gaudissard");
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(dim);
+        //System.out.println("Window height: "+dim.height);
         setResizable(true);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-
-
-        //System.out.println(getHeight()+ " "+mainPanelSize + " " + xOffset + " "+ yOffset);
 
         homePanel = new HomePanel(dim);
         this.setContentPane(homePanel);
@@ -112,9 +110,9 @@ public class DisplayWindow extends JFrame {
         });
     }
 
-    public void displayFight(){
+    public void displayFight(boolean wild){
         if(gamePanel != null){
-            gamePanel.displayFight();
+            gamePanel.displayFight(wild);
             //this.removeKeyListener(this.getKeyListeners()[0]);
         }
     }

@@ -18,6 +18,7 @@ public class ClientBack implements ConstantMessages {
     private PrintStream socketPrinter;
 
     private static ClientBack clientBackInstance;
+    private int spritesSize;
 
     private ClientBack(){}
 
@@ -255,9 +256,13 @@ public class ClientBack implements ConstantMessages {
         socketPrinter.println("poketudiant "+id+" free");
     }
 
+    public void sendPlayerActionFight(String action){
+        socketPrinter.println(ConstantMessages.PLAYER_ACTION+action);
+    }
+
     public void generateTeamDisplay(List<String> team){
         List<TeamItem> pokeTeam = new ArrayList<>();
-        int sizeImage = (int) (DisplayWindow.getInstance().getGamePanel().getxOffset()*0.65);
+        spritesSize = (int) (DisplayWindow.getInstance().getGamePanel().getxOffset()*0.65);
         int cpt = 0;
         for(String poke : team){
             String[] infosPoke = poke.split(" ");
@@ -268,37 +273,37 @@ public class ClientBack implements ConstantMessages {
             String maxPv = infosPoke[6];
             switch (infosPoke[0].toUpperCase()){
                 case "PARLFOR":
-                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantVariety.PARLFOR, sizeImage), cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
+                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantSpriteSource.PARLFOR, spritesSize), cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
                     break;
                 case "ISMAR":
-                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantVariety.ISMAR, sizeImage), cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
+                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantSpriteSource.ISMAR, spritesSize), cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
                     break;
                 case "RIGOLAMOR":
-                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantVariety.RIGOLAMOR, sizeImage), cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
+                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantSpriteSource.RIGOLAMOR, spritesSize), cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
                     break;
                 case "PROCRASTINO":
-                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantVariety.PROCRASTINO, sizeImage),cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
+                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantSpriteSource.PROCRASTINO, spritesSize),cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
                     break;
                 case "COUCHTAR":
-                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantVariety.COUCHTAR, sizeImage), cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
+                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantSpriteSource.COUCHTAR, spritesSize), cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
                     break;
                 case "NUIDEBOU":
-                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantVariety.NUIDEBOU, sizeImage),cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
+                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantSpriteSource.NUIDEBOU, spritesSize),cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
                     break;
                 case "ALABOURRE":
-                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantVariety.ALABOURRE, sizeImage),cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
+                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantSpriteSource.ALABOURRE, spritesSize),cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
                     break;
                 case "BUCHAFON":
-                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantVariety.BUCHAFON, sizeImage),cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
+                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantSpriteSource.BUCHAFON, spritesSize),cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
                     break;
                 case "BELMENTION":
-                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantVariety.BELMENTION, sizeImage),cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
+                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantSpriteSource.BELMENTION, spritesSize),cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
                     break;
                 case "PROMOMAJOR":
-                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantVariety.PROMOMAJOR, sizeImage),cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
+                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantSpriteSource.PROMOMAJOR, spritesSize),cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
                     break;
                 case "ENSEIGNANT-DRESSEUR":
-                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantVariety.ENSEIGNANT, sizeImage),cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
+                    pokeTeam.add(new TeamItem(SpriteManager.generatePoketudiant(PoketudiantSpriteSource.ENSEIGNANT, spritesSize),cpt, lvl, currentXp, xpNextLvl, currentPv, maxPv));
                     break;
                 default:
                     break;
@@ -314,7 +319,37 @@ public class ClientBack implements ConstantMessages {
             //System.out.println(message);
             String[] split = message.split(" ");
             if(split[1].equals("new")){
-                DisplayWindow.getInstance().displayFight();
+                // create fight panel or set visible if already created
+                DisplayWindow.getInstance().displayFight(split[2].equals("wild"));
+
+            }else if(split[1].equals("poketudiant")){
+                if(split[2].equals("player") || split[2].equals("opponent")){
+                    ImageIcon sprite;
+                    String pv=split[5], lvl=split[4], realVariety = split[3], myVariety = split[3].toUpperCase();
+                    if(realVariety.equals("Enseignant-dresseur")){
+                        myVariety = "ENSEIGNANT";
+                    }
+
+                    if(split[2].equals("player")){
+                        String attack1 = split[6] + " / " + split[7];
+                        String attack2 = split[8] + " / " + split[9];
+                        // send to front the sprite of poketudiant looking to opponent
+                        sprite = SpriteManager.generatePoketudiant(PoketudiantSpriteSource.valueOf(myVariety+"_DOS"), spritesSize);
+                        DisplayWindow.getInstance().getGamePanel().getFightPanel().displayPlayerPoketudiant(sprite, realVariety, pv, lvl, attack1, attack2);
+                    }else{
+                        // send to front the sprite of poketudiant looking to player
+                        sprite = SpriteManager.generatePoketudiant(PoketudiantSpriteSource.valueOf(myVariety), spritesSize);
+                        DisplayWindow.getInstance().getGamePanel().getFightPanel().displayOpponentPoketudiant(sprite, realVariety, pv, lvl);
+                    }
+                }else if(split[2].equals("xp")){
+                    // Notify player the amount of xp earned
+                }else if(split[2].equals("lvl")){
+                    // Notify the up of level
+                }else{
+                    // Notify evolution
+                }
+            }else if(split[1].equals("win") || split[1].equals("lose")){
+                DisplayWindow.getInstance().getGamePanel().displayMap();
             }
         }
     }

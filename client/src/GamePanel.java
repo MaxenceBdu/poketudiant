@@ -48,6 +48,10 @@ public class GamePanel extends JPanel {
         return xOffset;
     }
 
+    public FightPanel getFightPanel() {
+        return fightPanel;
+    }
+
     private int calculateMainPanelSize(int width, int height){
         int maxWidth = width/5*3;
         boolean found = false;
@@ -71,13 +75,13 @@ public class GamePanel extends JPanel {
         teamPanel.refreshTeam(team);
     }
 
-    public void displayFight(){
+    public void displayFight(boolean wild){
         if(fightPanel == null){
             fightPanel = new FightPanel(mainPanelSize, xOffset, yOffset);
             add(fightPanel);
         }
         mapPanel.setVisible(false);
-        //fightPanel.setDisplay();
+        fightPanel.setEnabledButtons(wild);
         fightPanel.setVisible(true);
     }
 

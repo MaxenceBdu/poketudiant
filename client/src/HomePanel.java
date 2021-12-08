@@ -18,6 +18,7 @@ public class HomePanel extends JLayeredPane {
         title.setLocation(dim.width/15, dim.height/5);
         title.setSize(title.getMaximumSize());
         add(title, PALETTE_LAYER);
+
         JButton play = new JButton("Explorer les serveurs");
         play.setContentAreaFilled(false);
         play.setOpaque(false);

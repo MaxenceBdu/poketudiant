@@ -8,28 +8,19 @@ import java.util.Map;
 
 public class SpriteManager {
 
-    private static Map<PoketudiantVariety, ImageIcon> map;
+    private static Map<PoketudiantSpriteSource, ImageIcon> map;
     private static int finalSize = 0;
 
-    public static JLabel generatePoketudiant(PoketudiantVariety variety, int size){
+    public static ImageIcon generatePoketudiant(PoketudiantSpriteSource variety, int size){
         if(finalSize == 0){
             finalSize = size;
         }
 
-        if(map == null){
-            map = new EnumMap<PoketudiantVariety, ImageIcon>(PoketudiantVariety.class);
-
-            map.put(PoketudiantVariety.PARLFOR,null);
-            map.put(PoketudiantVariety.ISMAR, null);
-            map.put(PoketudiantVariety.RIGOLAMOR,null);
-            map.put(PoketudiantVariety.PROCRASTINO,null);
-            map.put(PoketudiantVariety.COUCHTAR,null);
-            map.put(PoketudiantVariety.NUIDEBOU,null);
-            map.put(PoketudiantVariety.ALABOURRE, null);
-            map.put(PoketudiantVariety.BUCHAFON,null);
-            map.put(PoketudiantVariety.BELMENTION,null);
-            map.put(PoketudiantVariety.PROMOMAJOR,null);
-            map.put(PoketudiantVariety.ENSEIGNANT, null);
+        if(map == null) {
+            map = new EnumMap<>(PoketudiantSpriteSource.class);
+            for (PoketudiantSpriteSource pss : PoketudiantSpriteSource.values()) {
+                map.put(pss, null);
+            }
         }
 
         if(map.get(variety) == null){
@@ -42,6 +33,6 @@ public class SpriteManager {
             }
         }
 
-        return new JLabel(map.get(variety));
+        return map.get(variety);
     }
 }
