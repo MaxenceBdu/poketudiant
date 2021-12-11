@@ -63,7 +63,7 @@ public class FightPanel extends JLayeredPane {
         add(switchButton, PALETTE_LAYER);
     }
 
-    public void setEnabledButtons(boolean wild){
+    public void enableButtons(boolean wild){
         leaveButton.setEnabled(wild);
         catchButton.setEnabled(wild);
     }

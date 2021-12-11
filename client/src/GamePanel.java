@@ -81,18 +81,23 @@ public class GamePanel extends JLayeredPane {
             add(fightPanel);
         }
         mapPanel.setVisible(false);
-        fightPanel.setEnabledButtons(wild);
+        fightPanel.enableButtons(wild);
         fightPanel.setVisible(true);
     }
 
-    public void backToMap(boolean win){
+    public void backToMap(boolean isCatch, boolean win){
         fightPanel.setVisible(false);
         mapPanel.setVisible(true);
-        if(win)
-            JOptionPane.showMessageDialog(this,"Vous avez gagné votre combat !");
-            //notif = new JOptionPane("Vous avez gagné votre combat !");
-        else
-            JOptionPane.showMessageDialog(this,"Vous avez perdu votre combat...");
+        if(isCatch){
+            JOptionPane.showMessageDialog(this,"Pokétudiant capturé !");
+        }else{
+            if(win)
+                JOptionPane.showMessageDialog(this,"Vous avez gagné votre combat !");
+                //notif = new JOptionPane("Vous avez gagné votre combat !");
+            else
+                JOptionPane.showMessageDialog(this,"Vous avez perdu votre combat...");
+        }
+
     }
 
     public void xpNotification(String idPoketudiant, String xp){

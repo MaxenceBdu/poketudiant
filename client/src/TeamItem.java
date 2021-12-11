@@ -12,8 +12,8 @@ public class TeamItem extends JPanel {
                 add(new PoketudiantMoveButton(id, PoketudiantMoveButton.MoveDirection.descendre));
                 break;
             case 1:
-                add(new PoketudiantMoveButton(id, PoketudiantMoveButton.MoveDirection.descendre));
                 add(new PoketudiantMoveButton(id, PoketudiantMoveButton.MoveDirection.monter));
+                add(new PoketudiantMoveButton(id, PoketudiantMoveButton.MoveDirection.descendre));
                 break;
             case 2:
                 add(new PoketudiantMoveButton(id, PoketudiantMoveButton.MoveDirection.monter));

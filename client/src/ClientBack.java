@@ -350,8 +350,10 @@ public class ClientBack implements ConstantMessages {
                     // Notify evolution
                     DisplayWindow.getInstance().getGamePanel().evolutionNotification(split[3], split[4]);
                 }
+            }else if(split[1].equals("catch") && split[2].equals("ok")){
+                DisplayWindow.getInstance().getGamePanel().backToMap(true, false);
             }else if(split[1].equals("win") || split[1].equals("lose")){
-                DisplayWindow.getInstance().getGamePanel().backToMap(split[1].equals("win"));
+                DisplayWindow.getInstance().getGamePanel().backToMap(false, split[1].equals("win"));
             }
         }
     }

@@ -10,17 +10,21 @@ public class PoketudiantMoveButton extends JButton {
     }
 
     static class PoketudiantMoveListener implements ActionListener {
-        private int id;
-        private MoveDirection direction;
+        private final int id;
+        private final String direction;
         PoketudiantMoveListener(int id, MoveDirection direction){
             this.id = id;
-            this.direction = direction;
+            if(direction == MoveDirection.descendre){
+                this.direction = "down";
+            }else{
+                this.direction = "up";
+            }
 
         }
 
         @Override
         public void actionPerformed(ActionEvent actionEvent) {
-            ClientBack.getInstance().sendPoketudiantMove(id,direction.name());
+            ClientBack.getInstance().sendPoketudiantMove(id,direction);
         }
     }
 
