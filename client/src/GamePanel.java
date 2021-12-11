@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.util.List;
 
-public class GamePanel extends JPanel {
+public class GamePanel extends JLayeredPane {
 
     private TeamPanel teamPanel;
     private final MapPanel mapPanel;
@@ -88,13 +88,29 @@ public class GamePanel extends JPanel {
     public void backToMap(boolean win){
         fightPanel.setVisible(false);
         mapPanel.setVisible(true);
-        JOptionPane notif;
         if(win)
-            notif = new JOptionPane("Vous avez gagné votre combat !");
+            JOptionPane.showMessageDialog(this,"Vous avez gagné votre combat !");
+            //notif = new JOptionPane("Vous avez gagné votre combat !");
         else
-            notif = new JOptionPane("Vous avez perdu votre combat...");
-        notif.setSize(notif.getMaximumSize());
-        notif.setLocation(getWidth()/2 - notif.getWidth()/2, getHeight()/2 - notif.getHeight()/2);
-        add(notif);
+            JOptionPane.showMessageDialog(this,"Vous avez perdu votre combat...");
+    }
+
+    public void xpNotification(String idPoketudiant, String xp){
+        JOptionPane.showMessageDialog(this,"Votre pokétudiant à la place "+idPoketudiant+" a gagné "+xp+" point d'expérience !");
+    }
+
+    public void lvlUpNotification(String idPoketudiant, String lvls){
+        JOptionPane.showMessageDialog(this,"Votre pokétudiant à la place "+idPoketudiant+" est monté de "+lvls+" niveaux !");
+    }
+
+    public void evolutionNotification(String oldPoke, String newPoke){
+        JOptionPane.showMessageDialog(this,"Votre "+oldPoke+" a évolué en "+newPoke+" !");
+    }
+
+    public void chooseNewPoketudiant(String[] tab){
+        Object selectedPoke = JOptionPane.showInputDialog(this,"Choisissez un nouveau pokétudiant","Pokétudiant",JOptionPane.INFORMATION_MESSAGE,null,tab,tab[0]);
+        if(selectedPoke != null){
+            ClientBack.getInstance().sendSwitchPoketudiant(selectedPoke.toString().split(" ")[0]);
+        }
     }
 }

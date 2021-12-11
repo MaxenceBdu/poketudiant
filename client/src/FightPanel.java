@@ -91,13 +91,6 @@ public class FightPanel extends JLayeredPane {
         repaint();
     }
 
-    public void xpNotification(String poketudiant, String xp){
-        JOptionPane notif = new JOptionPane("Votre "+poketudiant+" a gagné "+xp+" point d'expérience !");
-        notif.setSize(notif.getMaximumSize());
-        notif.setLocation(getWidth()/2 - notif.getWidth()/2, getHeight()/2 - notif.getHeight()/2);
-        add(notif);
-    }
-
     static class Attack1ButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent actionEvent) {

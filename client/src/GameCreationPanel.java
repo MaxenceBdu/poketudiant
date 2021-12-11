@@ -8,31 +8,36 @@ public class GameCreationPanel extends JPanel {
     private final JTextArea textArea;
     private final JLabel infoMessage;
 
-    GameCreationPanel(){
+    GameCreationPanel(int parentWidth, int parentHeight){
         setLayout(null);
-        setBounds(600,600,500,200);
-        setBackground(new Color(0,0,0));
+        setSize(parentWidth/4, parentHeight/4);
+        setLocation(parentWidth/2-parentWidth/8,parentHeight/2-parentHeight/8);
+        setBackground(Color.DARK_GRAY);
+        setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
         textArea = new JTextArea();
-        textArea.setBounds(20,20, 100, 50);
+        textArea.setBounds(20,20, getWidth()-40, (int)(getHeight()*0.3));
+        textArea.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 30));
         add(textArea);
-
-        JButton cancelButton = new JButton("Annuler");
-        cancelButton.addActionListener(new CancelButtonListener(this));
-        cancelButton.setSize(cancelButton.getMaximumSize());
-        cancelButton.setLocation(200,100);
-        add(cancelButton);
-
-        JButton validateButton = new JButton("Valider");
-        validateButton.addActionListener(new ValidateButtonListener(this));
-        validateButton.setSize(validateButton.getMaximumSize());
-        validateButton.setLocation(30, 100);
-        add(validateButton);
 
         infoMessage = new JLabel();
         infoMessage.setVisible(false);
-        infoMessage.setSize(100, 30);
-        infoMessage.setLocation(300, 20);
+        infoMessage.setBounds(20, textArea.getY()+textArea.getHeight()+10, getWidth()-40, textArea.getHeight()-10);
+        infoMessage.setFont(new Font(Font.SANS_SERIF, Font.ITALIC, 30));
         add(infoMessage);
+
+        JButton validateButton = new JButton("Valider");
+        validateButton.addActionListener(new ValidateButtonListener(this));
+        validateButton.setSize(getWidth()/3, getHeight()/4);
+        validateButton.setLocation(20,getHeight() - (validateButton.getHeight()+20));
+        validateButton.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 30));
+        add(validateButton);
+
+        JButton cancelButton = new JButton("Annuler");
+        cancelButton.addActionListener(new CancelButtonListener(this));
+        cancelButton.setSize(getWidth()/3, getHeight()/4);
+        cancelButton.setLocation(getWidth()-20-cancelButton.getWidth(), getHeight() - (cancelButton.getHeight()+20));
+        cancelButton.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 30));
+        add(cancelButton);
 
         this.setVisible(true);
     }
@@ -66,8 +71,8 @@ public class GameCreationPanel extends JPanel {
             }else{
                 gameCreationPanel.infoMessage.setForeground(Color.RED);
                 gameCreationPanel.infoMessage.setText("Game not created");
+                gameCreationPanel.infoMessage.setVisible(true);
             }
-            gameCreationPanel.infoMessage.setVisible(true);
         }
     }
 }

@@ -12,4 +12,6 @@ public interface ConstantMessages {
     String MOVE_UP = "map move up";
     String MOVE_DOWN = "map move down";
     String PLAYER_ACTION = "encounter action ";
+    String ASK_POKE_INDEX = "encounter enter poketudiant index";
+    String SWITCH_POKE = "encounter poketudiant index ";
 }

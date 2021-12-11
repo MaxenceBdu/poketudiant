@@ -1,11 +1,14 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MenuPanel extends JLayeredPane {
     private GameCreationPanel gameCreationPanel;
@@ -19,51 +22,70 @@ public class MenuPanel extends JLayeredPane {
     public MenuPanel(int width, int height){
         setLayout(null);
         setSize(width, height);
-        setBackground(new Color(115,115,255));
+        this.setBackground(new Color(115,115,255));
+
+        try{
+            Image image = new ImageIcon(ImageIO.read(Objects.requireNonNull(getClass().getResource("/FOND-ACCUEIL.jpg")))).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            JLabel background = new JLabel(new ImageIcon(image));
+            background.setSize(width, height);
+            background.setLocation(0,0);
+            add(background, DEFAULT_LAYER);
+        }catch(IOException e){
+            e.printStackTrace();
+        }
 
         /* Servers part */
         JLabel label = new JLabel("Serveurs");
+        label.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
         label.setSize(label.getMaximumSize());
-        label.setLocation(0,0);
-        add(label);
+        label.setLocation(width/4-label.getWidth(),10);
+        add(label, PALETTE_LAYER);
+
+        RefreshButton rb = new RefreshButton(this);
+        rb.setSize(rb.getMaximumSize());
+        rb.setLocation(width/4-rb.getWidth(), label.getY()+80);
+        add(rb, PALETTE_LAYER);
 
         serversListModel = new DefaultListModel<>();
         serversList = new JList<>(serversListModel);
         serversList.addListSelectionListener(new ServerSelectionListener(serversList, this));
         serversList.setLayoutOrientation(JList.VERTICAL_WRAP);
-        serversList.setBounds(0, 300, 400, 400);
-        add(serversList);
-
-        RefreshButton rb = new RefreshButton(this);
-        rb.setSize(rb.getMaximumSize());
-        rb.setLocation(0, 100);
-        add(rb);
+        serversList.setSize((int)(width/2*0.7), (int)(height*0.6));
+        serversList.setLocation(width/4 - serversList.getWidth()/2, rb.getY()+150);
+        serversList.setFixedCellWidth(serversList.getWidth());
+        serversList.setFixedCellHeight(serversList.getHeight()/10);
+        serversList.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 35));
+        add(serversList,PALETTE_LAYER);
 
         /* Games part */
         JLabel title = new JLabel("Parties");
+        title.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 40));
         title.setSize(title.getMaximumSize());
-        title.setLocation(700, 10);
-        add(title);
+        title.setLocation(width/4*3 - title.getWidth()/2, 10);
+        add(title,PALETTE_LAYER);
+
+        CreateButton cr = new CreateButton(this);
+        cr.setSize(cr.getMaximumSize());
+        cr.setLocation(width/4*3 - cr.getWidth()/2, title.getY()+80);
+        add(cr,PALETTE_LAYER);
 
         gameListModel = new DefaultListModel<>();
         gameList = new JList<>(gameListModel);
         gameList.addListSelectionListener(new GameSelectionListener(gameList));
         gameList.setLayoutOrientation(JList.VERTICAL_WRAP);
-        gameList.setBounds(700, 300, 200, 400);
-        add(gameList);
-
-        CreateButton cr = new CreateButton(this);
-        cr.setSize(cr.getMaximumSize());
-        cr.setLocation(800, 0);
-        add(cr);
+        gameList.setSize((int)(width/2*0.7), (int)(height*0.6));
+        gameList.setLocation(width/4*3 - gameList.getWidth()/2, cr.getY()+150);
+        gameList.setFixedCellWidth(gameList.getWidth());
+        gameList.setFixedCellHeight(gameList.getHeight()/4);
+        gameList.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 45));
+        add(gameList,PALETTE_LAYER);
 
     }
 
     public void showGameCreationPanel(){
         if(gameCreationPanel == null){
-            gameCreationPanel = new GameCreationPanel();
-            this.add(gameCreationPanel);
-            setLayer(gameCreationPanel, POPUP_LAYER);
+            gameCreationPanel = new GameCreationPanel(getWidth(), getHeight());
+            this.add(gameCreationPanel, POPUP_LAYER);
         }else{
             gameCreationPanel.setVisible(true);
         }
@@ -122,6 +144,25 @@ public class MenuPanel extends JLayeredPane {
             @Override
             public void actionPerformed(ActionEvent e) {
                 menuPanel.addServers(ClientBack.getInstance().askForServers());
+            }
+        }
+    }
+
+    static class CreateButton extends JButton {
+
+        CreateButton(MenuPanel menuPanel){
+            setText("Créer une partie");
+            this.addActionListener(new CreateButtonListener(menuPanel));
+        }
+
+        static class CreateButtonListener implements ActionListener{
+            private final MenuPanel menuPanel;
+            public CreateButtonListener(MenuPanel menuPanel){
+                this.menuPanel = menuPanel;
+            }
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                menuPanel.showGameCreationPanel();
             }
         }
     }

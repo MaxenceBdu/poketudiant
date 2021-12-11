@@ -122,7 +122,6 @@ public class ClientBack implements ConstantMessages {
 
             socketPrinter.println(CREATE_GAME+gameName);
             String response = socketReader.readLine();
-
             return response.equals(GAME_CREATED);
         }catch(IOException e){
             e.printStackTrace();
@@ -139,6 +138,7 @@ public class ClientBack implements ConstantMessages {
             String response = socketReader.readLine();
 
             if(response.equals(JOIN_SUCCESS)){
+                DisplayWindow.getInstance().goToGame();
                 new ClientDaemon(ClientBack.getInstance().getSocketReader()).start();
             }
         }catch(IOException e){
@@ -154,8 +154,7 @@ public class ClientBack implements ConstantMessages {
 
         for(int i = 0; i < lines; i++){
             String[] split = map.get(i).split("");
-            //System.out.println(split.length);
-            for(int j = 0; j < split.length; j++){
+            for(int j = 0; j < columns; j++){
                 if(split[j].equals("0")) {
                     xplayer = j;
                     yplayer = i;
@@ -261,7 +260,7 @@ public class ClientBack implements ConstantMessages {
 
     public void generateTeamDisplay(List<String> team){
         List<TeamItem> pokeTeam = new ArrayList<>();
-        spritesSize = (int) (DisplayWindow.getInstance().getGamePanel().getxOffset()*0.65);
+        spritesSize = (int) (DisplayWindow.getInstance().getGamePanel().getxOffset()*0.6);
         int cpt = 0;
         for(String poke : team){
             String[] infosPoke = poke.split(" ");
@@ -318,7 +317,7 @@ public class ClientBack implements ConstantMessages {
             //System.out.println(message);
             String[] split = message.split(" ");
             if(split[1].equals("new")){
-                System.out.println("combat");
+                // System.out.println("combat");
                 // create fight panel or set visible if already created
                 DisplayWindow.getInstance().displayFight(split[2].equals("wild"));
 
@@ -342,17 +341,22 @@ public class ClientBack implements ConstantMessages {
                         DisplayWindow.getInstance().getGamePanel().getFightPanel().displayOpponentPoketudiant(sprite, realVariety, pv, lvl);
                     }
                 }else if(split[2].equals("xp")){
-                    System.out.println("gain d'xp");
-                    DisplayWindow.getInstance().getGamePanel().getFightPanel().xpNotification(split[3], split[4]);
                     // Notify player the amount of xp earned
+                    DisplayWindow.getInstance().getGamePanel().xpNotification(split[3], split[4]);
                 }else if(split[2].equals("lvl")){
                     // Notify the up of level
+                    DisplayWindow.getInstance().getGamePanel().lvlUpNotification(split[3], split[4]);
                 }else{
                     // Notify evolution
+                    DisplayWindow.getInstance().getGamePanel().evolutionNotification(split[3], split[4]);
                 }
             }else if(split[1].equals("win") || split[1].equals("lose")){
                 DisplayWindow.getInstance().getGamePanel().backToMap(split[1].equals("win"));
             }
         }
+    }
+
+    public void sendSwitchPoketudiant(String s) {
+        socketPrinter.println(SWITCH_POKE+s);
     }
 }
