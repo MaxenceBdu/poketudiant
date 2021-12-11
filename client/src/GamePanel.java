@@ -85,8 +85,16 @@ public class GamePanel extends JPanel {
         fightPanel.setVisible(true);
     }
 
-    public void displayMap(){
+    public void backToMap(boolean win){
         fightPanel.setVisible(false);
         mapPanel.setVisible(true);
+        JOptionPane notif;
+        if(win)
+            notif = new JOptionPane("Vous avez gagné votre combat !");
+        else
+            notif = new JOptionPane("Vous avez perdu votre combat...");
+        notif.setSize(notif.getMaximumSize());
+        notif.setLocation(getWidth()/2 - notif.getWidth()/2, getHeight()/2 - notif.getHeight()/2);
+        add(notif);
     }
 }

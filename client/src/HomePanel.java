@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class HomePanel extends JLayeredPane {
 
@@ -29,9 +30,9 @@ public class HomePanel extends JLayeredPane {
         play.setSize(play.getMaximumSize());
         play.setBorder(BorderFactory.createLineBorder(Color.WHITE, 3));
         add(play, PALETTE_LAYER);
-
+        ;
         try{
-            Image image = new ImageIcon(ImageIO.read(new File("src/assets/FOND-ACCUEIL.jpg"))).getImage().getScaledInstance(dim.width, dim.height, Image.SCALE_SMOOTH);
+            Image image = new ImageIcon(ImageIO.read(Objects.requireNonNull(getClass().getResource("/FOND-ACCUEIL.jpg")))).getImage().getScaledInstance(dim.width, dim.height, Image.SCALE_SMOOTH);
             JLabel background = new JLabel(new ImageIcon(image));
             background.setSize(dim.width, dim.height);
             background.setLocation(0,0);

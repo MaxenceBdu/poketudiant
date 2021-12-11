@@ -22,20 +22,21 @@ public class ClientDaemon extends Thread{
                 //System.out.println(data);
 
                 if(data.startsWith("map")){
-                    //System.out.println("map reçue");
+                    System.out.println("map");
                     String[] split = data.split(" ");
 
                     int lines = Integer.parseInt(split[1]);
                     int columns = Integer.parseInt(split[2]);
-                    //System.out.println(lines + " " + columns);
+                    System.out.println(lines + " " + columns);
 
                     List<String> map = new ArrayList<>(lines);
                     for(int i =0; i < lines; i++){
                         String s = socketReader.readLine();
-                        //System.out.println("dans for :"+s);
+                        //System.out.println(s);
                         map.add(s);
                     }
-                    //System.out.println("map size = "+map.size());
+                    //System.out.println("nb lignes map = "+map.size());
+                    System.out.println(map.get(0).length()+" "+map.get(0).split("").length);
                     ClientBack.getInstance().generateMap(lines, columns, map);
                 }else if(data.startsWith("team")){
                     //System.out.println("Team reçue");

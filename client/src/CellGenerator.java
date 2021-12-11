@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class CellGenerator {
 
@@ -26,7 +27,7 @@ public class CellGenerator {
         if(map.get(cellType) == null){
             map.remove(cellType);
             try{
-                map.put(cellType, new ImageIcon(new ImageIcon(ImageIO.read(new File("src/assets/"+cellType.name()+".png"))).getImage().getScaledInstance(size, size, Image.SCALE_SMOOTH)));
+                map.put(cellType, new ImageIcon(new ImageIcon(ImageIO.read(Objects.requireNonNull(CellGenerator.class.getResource(cellType.name()+".png")))).getImage().getScaledInstance(size, size, Image.SCALE_SMOOTH)));
             }catch (IOException e){
                 e.printStackTrace();
             }

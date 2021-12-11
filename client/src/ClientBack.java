@@ -147,7 +147,6 @@ public class ClientBack implements ConstantMessages {
     }
 
     public void generateMap(int lines, int columns, List<String> map){
-
         boolean found = false;
 
         // récupérer uniquement les cases "autour" du joueur
@@ -155,7 +154,8 @@ public class ClientBack implements ConstantMessages {
 
         for(int i = 0; i < lines; i++){
             String[] split = map.get(i).split("");
-            for(int j = 0; j < columns; j++){
+            //System.out.println(split.length);
+            for(int j = 0; j < split.length; j++){
                 if(split[j].equals("0")) {
                     xplayer = j;
                     yplayer = i;
@@ -167,7 +167,6 @@ public class ClientBack implements ConstantMessages {
                 break;
             }
         }
-        //System.out.println("xplayer= "+xplayer+", yplayer= "+yplayer);
 
         if(xplayer < 7) {
             xlimit1 = 0;
@@ -319,6 +318,7 @@ public class ClientBack implements ConstantMessages {
             //System.out.println(message);
             String[] split = message.split(" ");
             if(split[1].equals("new")){
+                System.out.println("combat");
                 // create fight panel or set visible if already created
                 DisplayWindow.getInstance().displayFight(split[2].equals("wild"));
 
@@ -351,7 +351,7 @@ public class ClientBack implements ConstantMessages {
                     // Notify evolution
                 }
             }else if(split[1].equals("win") || split[1].equals("lose")){
-                DisplayWindow.getInstance().getGamePanel().displayMap();
+                DisplayWindow.getInstance().getGamePanel().backToMap(split[1].equals("win"));
             }
         }
     }

@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class SpriteManager {
 
@@ -26,7 +27,7 @@ public class SpriteManager {
         if(map.get(variety) == null){
             map.remove(variety);
             try{
-                map.put(variety, new ImageIcon(new ImageIcon(ImageIO.read(new File("src/assets/"+variety.name()+".png"))).getImage().getScaledInstance(finalSize, finalSize, Image.SCALE_SMOOTH)));
+                map.put(variety, new ImageIcon(new ImageIcon(ImageIO.read(Objects.requireNonNull(SpriteManager.class.getResource("/"+variety.name()+".png")))).getImage().getScaledInstance(finalSize, finalSize, Image.SCALE_SMOOTH)));
             }catch (IOException e){
                 //System.out.println("src/assets/"+variety.name()+".jpg not found");
                 e.printStackTrace();
