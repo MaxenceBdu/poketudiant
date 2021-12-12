@@ -4,6 +4,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.List;
 
+/*
+    Application frame, also a singleton
+ */
 public class DisplayWindow extends JFrame {
 
     private static DisplayWindow displayWindowInstance;
@@ -20,7 +23,6 @@ public class DisplayWindow extends JFrame {
         super("Pokétudiant - Boisédu & Gaudissard");
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         setSize(dim);
-        //System.out.println("Window height: "+dim.height);
         setResizable(true);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -42,6 +44,9 @@ public class DisplayWindow extends JFrame {
         return gamePanel;
     }
 
+    /*
+        Creates the panel for the menu and displays it
+     */
     public void leaveHomeForMenu(){
         if(menuPanel == null) {
             menuPanel = new MenuPanel(this.getWidth(), this.getHeight());
@@ -50,22 +55,23 @@ public class DisplayWindow extends JFrame {
         homePanel = null;
     }
 
-    public void displayMap(List<JLabel> cells) {
-        if(gamePanel == null){
-            menuPanel.setVisible(false);
-            menuPanel = null;
-
-            gamePanel = new GamePanel(cells, getWidth(), getHeight());
-            setContentPane(gamePanel);
-        }else{
-            gamePanel.repaintMap(cells);
-        }
+    /*
+        Creates the game panel and displays it
+     */
+    public void displayGame(List<JLabel> cells) {
+        gamePanel.repaintMap(cells);
     }
 
+    /*
+        Function called to update the display of the sidebar
+     */
     public void displayTeam(List<TeamItem> team){
         gamePanel.displayTeam(team);
     }
 
+    /*
+        Displays the game panel and the map then adds keyboard listener
+     */
     public void goToGame(){
         menuPanel.setVisible(false);
         menuPanel = null;
@@ -89,7 +95,6 @@ public class DisplayWindow extends JFrame {
             @Override
             public void keyReleased(KeyEvent keyEvent) {
                 /* Appui touches pour déplacement */
-                //System.out.println("key listener");
                 switch (keyEvent.getKeyCode()){
                     case KeyEvent.VK_Z:
                         ClientBack.getInstance().playerMoveUp();
@@ -110,10 +115,13 @@ public class DisplayWindow extends JFrame {
         });
     }
 
+    /*
+        Swap to the fight panel
+        wild parameter is to disable 'capturer' and 'fuir' buttons
+     */
     public void displayFight(boolean wild){
         if(gamePanel != null){
             gamePanel.displayFight(wild);
-            //this.removeKeyListener(this.getKeyListeners()[0]);
         }
     }
 }

@@ -7,6 +7,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
+/*
+    Just a "welcome" panel
+ */
 public class HomePanel extends JLayeredPane {
 
     public HomePanel(Dimension dim){

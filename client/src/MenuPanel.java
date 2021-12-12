@@ -41,11 +41,13 @@ public class MenuPanel extends JLayeredPane {
         label.setLocation(width/4-label.getWidth(),10);
         add(label, PALETTE_LAYER);
 
+        // Button to refresh servers' list
         RefreshButton rb = new RefreshButton(this);
         rb.setSize(rb.getMaximumSize());
         rb.setLocation(width/4-rb.getWidth(), label.getY()+80);
         add(rb, PALETTE_LAYER);
 
+        // List of servers
         serversListModel = new DefaultListModel<>();
         serversList = new JList<>(serversListModel);
         serversList.addListSelectionListener(new ServerSelectionListener(serversList, this));
@@ -69,6 +71,7 @@ public class MenuPanel extends JLayeredPane {
         cr.setLocation(width/4*3 - cr.getWidth()/2, title.getY()+80);
         add(cr,PALETTE_LAYER);
 
+        // List of games
         gameListModel = new DefaultListModel<>();
         gameList = new JList<>(gameListModel);
         gameList.addListSelectionListener(new GameSelectionListener(gameList));
@@ -149,7 +152,9 @@ public class MenuPanel extends JLayeredPane {
     }
 
     static class CreateButton extends JButton {
-
+        /*
+            Displays a pop-up to create a new game
+         */
         CreateButton(MenuPanel menuPanel){
             setText("Créer une partie");
             this.addActionListener(new CreateButtonListener(menuPanel));

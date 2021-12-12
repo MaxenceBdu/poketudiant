@@ -7,6 +7,10 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
 
+/*
+    Class that manages the images for the map
+    Size of cells is not updatable
+ */
 public class CellGenerator {
 
     private static Map<CellType, ImageIcon> map;

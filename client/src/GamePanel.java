@@ -1,28 +1,15 @@
 import javax.swing.*;
 import java.util.List;
 
+/*
+    Panel that contains team display, map and fight scene
+ */
 public class GamePanel extends JLayeredPane {
 
-    private TeamPanel teamPanel;
+    private final TeamPanel teamPanel;
     private final MapPanel mapPanel;
     private FightPanel fightPanel;
-    //private ChatPanel chatPanel;
     private final int mainPanelSize,yOffset, xOffset;
-
-    public GamePanel(List<JLabel> map, int width, int height){
-        setVisible(true);
-        setLayout(null);
-        setBounds(0,0,width, height);
-
-        mainPanelSize = this.calculateMainPanelSize(width, height);
-        yOffset = (height- mainPanelSize) / 2;
-        xOffset = (width - mainPanelSize) / 2;
-
-        mapPanel = new MapPanel(map, mainPanelSize, xOffset, yOffset);
-        add(mapPanel);
-
-
-    }
 
     public GamePanel(int width, int height){
         setVisible(true);
@@ -52,6 +39,7 @@ public class GamePanel extends JLayeredPane {
         return fightPanel;
     }
 
+    // Useful to fix the size of map's cells
     private int calculateMainPanelSize(int width, int height){
         int maxWidth = width/5*3;
         boolean found = false;
@@ -85,6 +73,9 @@ public class GamePanel extends JLayeredPane {
         fightPanel.setVisible(true);
     }
 
+    /*
+        Exits the fight scene and displays notifications related to the previous fight
+     */
     public void backToMap(boolean isCatch, boolean win){
         fightPanel.setVisible(false);
         mapPanel.setVisible(true);
@@ -93,7 +84,6 @@ public class GamePanel extends JLayeredPane {
         }else{
             if(win)
                 JOptionPane.showMessageDialog(this,"Vous avez gagné votre combat !");
-                //notif = new JOptionPane("Vous avez gagné votre combat !");
             else
                 JOptionPane.showMessageDialog(this,"Vous avez perdu votre combat...");
         }

@@ -4,9 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.List;
-
+/*
+    Contains the map's cells
+ */
 public class MapPanel extends JPanel {
-
 
     public MapPanel(List<JLabel> map, int size, int xOffset, int yOffset){
         setVisible(true);
@@ -22,6 +23,9 @@ public class MapPanel extends JPanel {
         }
     }
 
+    /*
+        Removes all cells and the redraws with new map
+     */
     public void repaintMap(List<JLabel> map){
         removeAll();
         for(JLabel c: map){

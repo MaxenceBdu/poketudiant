@@ -7,6 +7,12 @@ import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+    Maybe the most important class of the client
+    Builds front elements before sending them to the panels
+    And sends udp/tcp messages
+    It's a singleton
+ */
 public class ClientBack implements ConstantMessages {
     final int UDP_PORT = 9000;
     final int TCP_PORT = 9001;
@@ -34,6 +40,10 @@ public class ClientBack implements ConstantMessages {
         return socketReader;
     }
 
+    /*
+        Sends the 'looking for poketudiant servers' message
+        and stores the responses
+     */
     protected ArrayList<InetAddress> askForServers() {
         if(udpSocket == null){
             try {
@@ -82,6 +92,10 @@ public class ClientBack implements ConstantMessages {
         }
     }
 
+    /*
+        Send the 'require game list' message
+        and store the list of game
+     */
     public ArrayList<GameListItem> askForGameList(InetAddress serverAddress){
         ArrayList<GameListItem> games = new ArrayList<>();
         try{
@@ -114,6 +128,10 @@ public class ClientBack implements ConstantMessages {
         }
     }
 
+    /*
+        Send the 'create game name_of_the_game' message
+        with game's name as parameter
+     */
     public boolean askForGameCreation(String gameName){
 
         try{
@@ -129,6 +147,10 @@ public class ClientBack implements ConstantMessages {
         }
     }
 
+    /*
+        Send the 'join game name_of_the_game' message
+        with game's name as parameter
+     */
     public void askForGameJoin(String game){
         try{
             socketReader = new BufferedReader(new InputStreamReader(tcpSocket.getInputStream()));
@@ -146,12 +168,15 @@ public class ClientBack implements ConstantMessages {
         }
     }
 
+    /*
+        Finds the position of the player in the map
+        and then keeps only the cells around it to make a 15x15 square
+     */
     public void generateMap(int lines, int columns, List<String> map){
         boolean found = false;
-
-        // récupérer uniquement les cases "autour" du joueur
         int xplayer =0, yplayer = 0, xlimit1, xlimit2, ylimit1, ylimit2;
 
+        // Find player's position
         for(int i = 0; i < lines; i++){
             String[] split = map.get(i).split("");
             for(int j = 0; j < columns; j++){
@@ -167,6 +192,7 @@ public class ClientBack implements ConstantMessages {
             }
         }
 
+        // Modify limits according the player's postion and map's borders
         if(xplayer < 7) {
             xlimit1 = 0;
             xlimit2 = 15;
@@ -189,10 +215,6 @@ public class ClientBack implements ConstantMessages {
             ylimit2 = yplayer+8;
         }
 
-        //System.out.println("ylimit1: "+ylimit1);
-        //System.out.println("ylimit2: "+ylimit2);
-        //System.out.println("xlimit1: "+xlimit1);
-        //System.out.println("xlimit2: "+xlimit2);
         List<JLabel> cells = new ArrayList<>(15*15);
         int size = DisplayWindow.getInstance().getGamePanel().getMainPanelSize()/15;
         for(int i = ylimit1; i < ylimit2; i++){
@@ -223,9 +245,12 @@ public class ClientBack implements ConstantMessages {
                 }
             }
         }
-        DisplayWindow.getInstance().displayMap(cells);
-    }
+        DisplayWindow.getInstance().displayGame(cells);
+    } // generateMap
 
+    /*
+        Functions to send player's movement
+     */
     public void playerMoveUp(){
         sendPlayerAction(MOVE_UP);
     }
@@ -246,6 +271,9 @@ public class ClientBack implements ConstantMessages {
         socketPrinter.println(move);
     }
 
+    /*
+        Functions to send player's actions during the fight
+     */
     public void sendPoketudiantMove(int id, String direction){
         socketPrinter.println("poketudiant "+id+" move "+direction);
     }
@@ -258,6 +286,10 @@ public class ClientBack implements ConstantMessages {
         socketPrinter.println(ConstantMessages.PLAYER_ACTION+action);
     }
 
+    /*
+        Gets sprites for all poketudiants of the team
+        and sends them to the front (only for the sidebar here)
+     */
     public void generateTeamDisplay(List<String> team){
         List<TeamItem> pokeTeam = new ArrayList<>();
         spritesSize = (int) (DisplayWindow.getInstance().getGamePanel().getxOffset()*0.6);
@@ -308,16 +340,17 @@ public class ClientBack implements ConstantMessages {
             }
             cpt++;
         }
-        //System.out.println(pokeTeam.size());
         DisplayWindow.getInstance().displayTeam(pokeTeam);
-    }
+    } // generateTeamDisplay
 
+
+    /*
+        Manages messages about fights excepted the 'encounter enter poketudiant index' message
+     */
     public void interpretFightMessage(String message){
         if(!message.isBlank()){
-            //System.out.println(message);
             String[] split = message.split(" ");
             if(split[1].equals("new")){
-                // System.out.println("combat");
                 // create fight panel or set visible if already created
                 DisplayWindow.getInstance().displayFight(split[2].equals("wild"));
 
@@ -332,6 +365,7 @@ public class ClientBack implements ConstantMessages {
                     if(split[2].equals("player")){
                         String attack1 = split[6] + " / " + split[7];
                         String attack2 = split[8] + " / " + split[9];
+                        System.out.println(attack1+" "+attack2);
                         // send to front the sprite of poketudiant looking to opponent
                         sprite = SpriteManager.generatePoketudiant(PoketudiantSpriteSource.valueOf(myVariety+"_DOS"), spritesSize);
                         DisplayWindow.getInstance().getGamePanel().getFightPanel().displayPlayerPoketudiant(sprite, realVariety, pv, lvl, attack1, attack2);
@@ -360,8 +394,12 @@ public class ClientBack implements ConstantMessages {
                 DisplayWindow.getInstance().getGamePanel().koNotification(split[2].equals("player"));
             }
         }
-    }
+    } // interpretFightMessage
 
+    /*
+        Send the 'encounter poketudiant index X' message
+        where X is the String parameter
+     */
     public void sendSwitchPoketudiant(String s) {
         socketPrinter.println(SWITCH_POKE+s);
     }

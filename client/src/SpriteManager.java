@@ -7,6 +7,10 @@ import java.util.EnumMap;
 import java.util.Map;
 import java.util.Objects;
 
+/*
+    Class that manages the images of every poketudiants (face and back)
+    Size of sprites is not updatable
+ */
 public class SpriteManager {
 
     private static Map<PoketudiantSpriteSource, ImageIcon> map;
@@ -29,7 +33,6 @@ public class SpriteManager {
             try{
                 map.put(variety, new ImageIcon(new ImageIcon(ImageIO.read(Objects.requireNonNull(SpriteManager.class.getResource("/"+variety.name()+".png")))).getImage().getScaledInstance(finalSize, finalSize, Image.SCALE_SMOOTH)));
             }catch (IOException e){
-                //System.out.println("src/assets/"+variety.name()+".jpg not found");
                 e.printStackTrace();
             }
         }

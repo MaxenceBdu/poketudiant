@@ -1,10 +1,9 @@
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
+/*
+    Class used in menu panel, in list of games
+ */
 public class GameListItem {
-    private String gameName;
-    private int players;
+    private final String gameName;
+    private final int players;
 
     public GameListItem(String gameName, int players){
         this.gameName = gameName;
@@ -13,10 +12,6 @@ public class GameListItem {
 
     public String getName() {
         return gameName;
-    }
-
-    public int getPlayers() {
-        return players;
     }
 
     @Override

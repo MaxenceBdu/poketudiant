@@ -5,13 +5,15 @@ import java.awt.event.ActionListener;
 
 public class FightPanel extends JLayeredPane {
 
-    private final JButton leaveButton,catchButton,attack1, attack2, switchButton;
+    private final JButton leaveButton;
+    private final JButton catchButton;
+    private final JButton attack1;
+    private final JButton attack2;
 
     private final JLabel poketudiantPlayer,poketudiantOpponent;
 
 
     public FightPanel(int size, int xOffset, int yOffset){
-        //System.out.println("FightPanel size: "+size);
         setLayout(null);
         setVisible(true);
         setBounds(xOffset, yOffset, size, size);
@@ -27,47 +29,61 @@ public class FightPanel extends JLayeredPane {
             System.out.println("Fond pour combat non trouvé");
         }*/
 
+        // Button to escape against a wild poketudiant
         leaveButton = new JButton("FUIR");
         leaveButton.setLocation((int)(size*0.8), (int) (size*0.9));
         leaveButton.setSize(leaveButton.getMaximumSize());
         leaveButton.addActionListener(new LeaveButtonListener());
         add(leaveButton, PALETTE_LAYER);
 
+        // Button to try a catch on a wild poketudiant
         catchButton = new JButton("CAPTURER");
         catchButton.setLocation((int)(size*0.8), (int) (size*0.8));
         catchButton.setSize(catchButton.getMaximumSize());
         catchButton.addActionListener(new CatchButtonListener());
         add(catchButton, PALETTE_LAYER);
 
+        // Sprite of player's poketudiant
         poketudiantPlayer = new JLabel();
         poketudiantPlayer.setLocation(50,500);
         add(poketudiantPlayer, PALETTE_LAYER);
 
+        // Sprite of opponent's poketudiant
         poketudiantOpponent = new JLabel();
         poketudiantOpponent.setLocation(500,50);
         add(poketudiantOpponent, PALETTE_LAYER);
 
+        // Button for first attack of player's poketudiant
         attack1 = new JButton();
         attack1.setLocation(size/10,(int) (size*0.8));
         attack1.addActionListener(new Attack1ButtonListener());
         add(attack1, PALETTE_LAYER);
 
+        // Button for second attack of player's poketudiant
         attack2 = new JButton();
         attack2.addActionListener(new Attack2ButtonListener());
         add(attack2, PALETTE_LAYER);
 
-        switchButton = new JButton("CHANGER");
+        // Button to ask for a switch between poketudiants
+        JButton switchButton = new JButton("CHANGER");
         switchButton.setSize(switchButton.getMaximumSize());
         switchButton.setLocation(size/9, (int) (size*0.9));
         switchButton.addActionListener(new SwitchButtonListener());
         add(switchButton, PALETTE_LAYER);
     }
 
+    /*
+        Disables escape and catch buttons if not against a wild poketudiant
+     */
     public void enableButtons(boolean wild){
         leaveButton.setEnabled(wild);
         catchButton.setEnabled(wild);
     }
 
+    /*
+        Updates the display of player's poketudiant (PV, niveau, variété, etc)
+        Updates the attack buttons too
+     */
     public void displayPlayerPoketudiant(ImageIcon poketudiant, String variety, String hp, String lvl, String attack1, String attack2){
         poketudiantPlayer.setText("<html>"+variety+"<br/> PV: "+hp+"<br/> Nv: "+lvl+"</html>");
         poketudiantPlayer.setIcon(poketudiant);
@@ -83,6 +99,9 @@ public class FightPanel extends JLayeredPane {
         repaint();
     }
 
+    /*
+        Updates the display of opponent's poketudiant (PV, niveau, variété, etc)
+     */
     public void displayOpponentPoketudiant(ImageIcon poketudiant, String variety, String hp, String lvl){
         poketudiantOpponent.setText("<html>"+variety+"<br/> PV: "+hp+"<br/> Nv: "+lvl+"</html>");
         poketudiantOpponent.setIcon(poketudiant);

@@ -3,6 +3,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/*
+    Panel to enter the name of the new game
+ */
 public class GameCreationPanel extends JPanel {
 
     private final JTextArea textArea;
@@ -14,6 +17,8 @@ public class GameCreationPanel extends JPanel {
         setLocation(parentWidth/2-parentWidth/8,parentHeight/2-parentHeight/8);
         setBackground(Color.DARK_GRAY);
         setBorder(BorderFactory.createLineBorder(Color.BLACK,3));
+
+        // Text area to enter the name of the game
         textArea = new JTextArea();
         textArea.setBounds(20,20, getWidth()-40, (int)(getHeight()*0.3));
         textArea.setFont(new Font(Font.SANS_SERIF, Font.PLAIN, 30));
@@ -25,6 +30,7 @@ public class GameCreationPanel extends JPanel {
         infoMessage.setFont(new Font(Font.SANS_SERIF, Font.ITALIC, 30));
         add(infoMessage);
 
+        // Validate button will send the tcp request when clicked
         JButton validateButton = new JButton("Valider");
         validateButton.addActionListener(new ValidateButtonListener(this));
         validateButton.setSize(getWidth()/3, getHeight()/4);
@@ -69,6 +75,7 @@ public class GameCreationPanel extends JPanel {
                 // Start the daemon
                 new ClientDaemon(ClientBack.getInstance().getSocketReader()).start();
             }else{
+                // Display error message
                 gameCreationPanel.infoMessage.setForeground(Color.RED);
                 gameCreationPanel.infoMessage.setText("Game not created");
                 gameCreationPanel.infoMessage.setVisible(true);

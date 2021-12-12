@@ -16,12 +16,16 @@ public class ClientDaemon extends Thread implements ConstantMessages{
 
     @Override
     public void run() {
+        /*
+            When the messages are about the map, the team or an index ask,
+            we have to read incoming lines, so they are special cases
+         */
         while(true){
             try{
                 String data = socketReader.readLine();
-                System.out.println("Reçu :"+data);
+                //System.out.println("Reçu :"+data);
 
-                if(data.startsWith("map")){
+                if(data.startsWith("map")){ // If it's map information
                     //System.out.println("map");
                     String[] split = data.split(" ");
 
@@ -32,26 +36,23 @@ public class ClientDaemon extends Thread implements ConstantMessages{
                     List<String> map = new ArrayList<>(lines);
                     for(int i =0; i < lines; i++){
                         String s = socketReader.readLine();
-                        //System.out.println(s);
+                        //System.out.println("Reçu :"+s);
                         map.add(s);
                     }
-                    //System.out.println("nb lignes map = "+map.size());
-                    //System.out.println(map.get(0).length()+" "+map.get(0).split("").length);
                     ClientBack.getInstance().generateMap(lines, columns, map);
-                }else if(data.startsWith("team")){
-                    //System.out.println("Team reçue");
+                }else if(data.startsWith("team")){ // If it's team information
                     String[] split = data.split(" ");
                     int nbPoketudiants = Integer.parseInt(split[2]);
                     List<String> team = new ArrayList<>();
                     for(int i = 0; i < nbPoketudiants; i++){
                         String s = socketReader.readLine();
-                        System.out.println("Reçu: "+s);
+                        //System.out.println("Reçu: "+s);
                         team.add(s);
                     }
                     ClientBack.getInstance().generateTeamDisplay(team);
                 }else{
-                    // It's an 'encounter' message (or blank message ????? (issue with teacher's server))
-                    if(data.equals(ConstantMessages.ASK_POKE_INDEX)){
+                    // It's an 'encounter' message
+                    if(data.equals(ConstantMessages.ASK_POKE_INDEX)){ // 'encounter enter poketudiant index'
                         int nbPoke = Integer.parseInt(socketReader.readLine().split(" ")[2]);
                         String[] team = new String[nbPoke];
                         for(int i = 0; i < nbPoke; i++){
@@ -64,7 +65,7 @@ public class ClientDaemon extends Thread implements ConstantMessages{
             }catch(SocketTimeoutException e){
                 // Do nothing
             }catch(IOException e){
-                //System.out.println(e.getMessage());
+                // Do nothing
             }
 
         }
