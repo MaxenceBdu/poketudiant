@@ -1,0 +1,54 @@
+{
+    "Bavardage" : {
+        "type" : "Noisy",
+        "Puissance" : 10
+    },
+    "Groboucan" : {
+        "type" : "Noisy",
+        "Puissance" : 15
+    },
+    "Megaphone-Vocal" : {
+        "type" : "Noisy",
+        "Puissance" : 20
+    },
+    "Baillement" : {
+        "type" : "Lazy",
+        "Puissance" : 10
+    },
+    "Pti'Somme" : {
+        "type" : "Lazy",
+        "Puissance" : 15
+    },
+    "Superdodo" : {
+        "type" : "Lazy",
+        "Puissance" : 20
+    },
+    "Rateletrain" : {
+        "type" : "Lazy",
+        "Puissance" : 15
+    },
+    "Oboulo" : {
+        "type" : "Motivated",
+        "Puissance" : 10
+    },
+    "Exo-Maison" : {
+        "type" : "Motivated",
+        "Puissance" : 15
+    },
+    "Max-Reviz" : {
+        "type" : "Motivated",
+        "Puissance" : 20
+    },
+    "Tit'Question" : {
+        "type" : "Teacher",
+        "Puissance" : 10
+    },
+    "Poser-Colle" : {
+        "type" : "Teacher",
+        "Puissance" : 15
+    },
+    "Fatal-Interro" : {
+        "type" : "Teacher",
+        "Puissance" : 20
+    }
+}
