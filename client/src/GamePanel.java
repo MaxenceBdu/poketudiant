@@ -118,4 +118,16 @@ public class GamePanel extends JLayeredPane {
             ClientBack.getInstance().sendSwitchPoketudiant(selectedPoke.toString().split(" ")[0]);
         }
     }
+
+    public void forbiddenNotification(){
+        JOptionPane.showMessageDialog(this,"Vous ne pouvez pas faire ça !");
+    }
+
+    public void koNotification(boolean forPlayer){
+        if(forPlayer){
+            JOptionPane.showMessageDialog(this,"Votre pokétudiant est KO.");
+        }else{
+            JOptionPane.showMessageDialog(this,"Le pokétudiant adverse est KO.");
+        }
+    }
 }
