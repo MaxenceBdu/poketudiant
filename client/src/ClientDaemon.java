@@ -23,20 +23,16 @@ public class ClientDaemon extends Thread implements ConstantMessages{
         while(true){
             try{
                 String data = socketReader.readLine();
-                //System.out.println("Reçu :"+data);
 
                 if(data.startsWith("map")){ // If it's map information
-                    //System.out.println("map");
                     String[] split = data.split(" ");
 
                     int lines = Integer.parseInt(split[1]);
                     int columns = Integer.parseInt(split[2]);
-                    //System.out.println(lines + " " + columns);
 
                     List<String> map = new ArrayList<>(lines);
                     for(int i =0; i < lines; i++){
                         String s = socketReader.readLine();
-                        //System.out.println("Reçu :"+s);
                         map.add(s);
                     }
                     ClientBack.getInstance().generateMap(lines, columns, map);
@@ -46,7 +42,6 @@ public class ClientDaemon extends Thread implements ConstantMessages{
                     List<String> team = new ArrayList<>();
                     for(int i = 0; i < nbPoketudiants; i++){
                         String s = socketReader.readLine();
-                        //System.out.println("Reçu: "+s);
                         team.add(s);
                     }
                     ClientBack.getInstance().generateTeamDisplay(team);
@@ -62,9 +57,7 @@ public class ClientDaemon extends Thread implements ConstantMessages{
                     }
                     ClientBack.getInstance().interpretFightMessage(data);
                 }
-            }catch(SocketTimeoutException e){
-                // Do nothing
-            }catch(IOException e){
+            } catch(IOException e){
                 // Do nothing
             }
 

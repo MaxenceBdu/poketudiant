@@ -95,6 +95,7 @@ public class FightPanel extends JLayeredPane {
         this.attack2.setSize(this.attack2.getMaximumSize());
         this.attack2.setLocation(this.attack1.getX()+this.attack1.getWidth()+10, this.attack1.getY());
         this.attack2.setText(attack2);
+        this.attack2.setSize(this.attack2.getMaximumSize());
         validate();
         repaint();
     }

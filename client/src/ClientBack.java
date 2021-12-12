@@ -365,7 +365,7 @@ public class ClientBack implements ConstantMessages {
                     if(split[2].equals("player")){
                         String attack1 = split[6] + " / " + split[7];
                         String attack2 = split[8] + " / " + split[9];
-                        System.out.println(attack1+" "+attack2);
+                        //System.out.println(attack1+" "+attack2);
                         // send to front the sprite of poketudiant looking to opponent
                         sprite = SpriteManager.generatePoketudiant(PoketudiantSpriteSource.valueOf(myVariety+"_DOS"), spritesSize);
                         DisplayWindow.getInstance().getGamePanel().getFightPanel().displayPlayerPoketudiant(sprite, realVariety, pv, lvl, attack1, attack2);
