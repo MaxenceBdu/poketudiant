@@ -134,12 +134,13 @@ class Combat:
                                 # Gère la fin de combat pour le joueurs ayant mis sa commande en premier
                                 if joueur == self.__joueur1:
                                     self.__joueur2.setCommandType("GAME")
+                                    self.__joueur2.removeCombat()
                                     self.__partie.sendMapToAll()
                                     self.__partie.sendEquipe(self.__joueur2)
-                                    self.__joueur2.removeCombat()
                                     return True
                                 else:
                                     self.__joueur1.setCommandType("GAME")
+                                    self.__joueur1.removeCombat()
                                     self.__partie.sendMapToAll()
                                     self.__partie.sendEquipe(self.__joueur1)
                                     self.__joueur1.removeCombat()
