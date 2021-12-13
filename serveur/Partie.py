@@ -324,7 +324,7 @@ class Partie:
                 if probaCombat < 30:
                     # On choisit le poketudiant sauvage alétoirement parmis les poketudiants capturables
                     varietePoketudiant = Init.listeCapturable[random.randrange(0,len(Init.listeCapturable))]
-                    wildPoketudiant = Poketudiant.Poketudiant(varietePoketudiant,random.randrange(1,4))
+                    wildPoketudiant = Poketudiant.Poketudiant(varietePoketudiant,random.randrange(2,5))
                     self.__mutexSend.acquire()
 
                     # Informations envoyées pour démarrer le combat avec le poketudiant sauvage
