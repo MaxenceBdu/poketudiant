@@ -315,21 +315,21 @@ class Combat:
                     equipe = self.__partie.getEquipeJoueur(joueur.getIndiceJoueur())
                     for i in self.__participantJ1:
                         expNext = equipe.getPoketudiant(i).getEXPToNextLevel()
-
-                        # Si le poketudiant monte en niveau suite au combat
-                        if expNext <= expParPoke + equipe.getPoketudiant(i).getEXP() and equipe.getPoketudiant(i).getNiveau() < 10:
-                            varieteP = equipe.getPoketudiant(i)
-                            reponse = ConstantMessage.ConstantMessage["SERVER_POKELVLINFO"] + str(i) + " 1 \n"
-                            joueur.getClientConn().send(reponse.encode(ENCODING))
-
-                            # Si le poketudiant évolue suite au combat
-                            if equipe.getPoketudiant(i).prendNiveau():
-                                reponse = ConstantMessage.ConstantMessage["SERVER_POKEEVOINFO"] + str(i) + " " + equipe.getPoketudiant(i).getVariete() + "\n"
+                        if equipe.getPoketudiant(i).getNiveau() < 10:
+                            # Si le poketudiant monte en niveau suite au combat
+                            if expNext <= expParPoke + equipe.getPoketudiant(i).getEXP():
+                                varieteP = equipe.getPoketudiant(i)
+                                reponse = ConstantMessage.ConstantMessage["SERVER_POKELVLINFO"] + str(i) + " 1 \n"
                                 joueur.getClientConn().send(reponse.encode(ENCODING))
-                        equipe.getPoketudiant(i).giveXP(expParPoke)
 
-                        reponse = ConstantMessage.ConstantMessage["SERVER_POKEXPINFO"] + str(i) + " " + str(expParPoke) + "\n"
-                        joueur.getClientConn().send(reponse.encode(ENCODING))
+                                # Si le poketudiant évolue suite au combat
+                                if equipe.getPoketudiant(i).prendNiveau():
+                                    reponse = ConstantMessage.ConstantMessage["SERVER_POKEEVOINFO"] + str(i) + " " + equipe.getPoketudiant(i).getVariete() + "\n"
+                                    joueur.getClientConn().send(reponse.encode(ENCODING))
+                            equipe.getPoketudiant(i).giveXP(expParPoke)
+
+                            reponse = ConstantMessage.ConstantMessage["SERVER_POKEXPINFO"] + str(i) + " " + str(expParPoke) + "\n"
+                            joueur.getClientConn().send(reponse.encode(ENCODING))
 
                     joueur.getClientConn().send(ConstantMessage.ConstantMessage["SERVER_WINMSG"].encode(ENCODING))
                     return True
