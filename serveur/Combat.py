@@ -316,7 +316,7 @@ class Combat:
                         expNext = equipe.getPoketudiant(i).getEXPToNextLevel()
 
                         # Si le poketudiant monte en niveau suite au combat
-                        if expNext <= expParPoke + equipe.getPoketudiant(i).getEXP():
+                        if expNext <= expParPoke + equipe.getPoketudiant(i).getEXP() and equipe.getPoketudiant(i).getNiveau() < 10:
                             varieteP = equipe.getPoketudiant(i)
                             reponse = ConstantMessage.ConstantMessage["SERVEUR_POKELVLNFO"] + str(i) + " 1 \n"
                             joueur.getClientConn().send(reponse.encode(ENCODING))
