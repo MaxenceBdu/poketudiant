@@ -385,9 +385,14 @@ public class ClientBack implements ConstantMessages {
                     DisplayWindow.getInstance().getGamePanel().evolutionNotification(split[3], split[4]);
                 }
             }else if(split[1].equals("catch") && split[2].equals("ok")){
-                DisplayWindow.getInstance().getGamePanel().backToMap(true, false);
+                DisplayWindow.getInstance().getGamePanel().backToMap(0, false);
             }else if(split[1].equals("win") || split[1].equals("lose")){
-                DisplayWindow.getInstance().getGamePanel().backToMap(false, split[1].equals("win"));
+                DisplayWindow.getInstance().getGamePanel().backToMap(2, split[1].equals("win"));
+            }else if(split[1].equals("escape")) {
+                if(split[2].equals("ok"))
+                    DisplayWindow.getInstance().getGamePanel().backToMap(1, split[1].equals("win"));
+                else
+                    DisplayWindow.getInstance().getGamePanel().failEscapeNotification();
             }else if(split[1].equals("forbidden")){
                 DisplayWindow.getInstance().getGamePanel().forbiddenNotification();
             }else if(split[1].equals("KO")){

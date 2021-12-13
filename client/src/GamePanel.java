@@ -76,18 +76,26 @@ public class GamePanel extends JLayeredPane {
     /*
         Exits the fight scene and displays notifications related to the previous fight
      */
-    public void backToMap(boolean isCatch, boolean win){
+    public void backToMap(int leaveType, boolean win){
         fightPanel.setVisible(false);
         mapPanel.setVisible(true);
-        if(isCatch){
-            JOptionPane.showMessageDialog(this,"Pokétudiant capturé !");
-        }else{
-            if(win)
-                JOptionPane.showMessageDialog(this,"Vous avez gagné votre combat !");
-            else
-                JOptionPane.showMessageDialog(this,"Vous avez perdu votre combat...");
-        }
 
+        switch (leaveType){
+            case 0:
+                JOptionPane.showMessageDialog(this,"Pokétudiant capturé !");
+                break;
+            case 1:
+                JOptionPane.showMessageDialog(this,"Vous avez pris la fuite");
+                break;
+            case 2:
+                if(win)
+                    JOptionPane.showMessageDialog(this,"Vous avez gagné votre combat !");
+                else
+                    JOptionPane.showMessageDialog(this,"Vous avez perdu votre combat...");
+                break;
+            default:
+                break;
+        }
     }
 
     public void xpNotification(String idPoketudiant, String xp){
@@ -103,7 +111,9 @@ public class GamePanel extends JLayeredPane {
     }
 
     public void chooseNewPoketudiant(String[] tab){
-        Object selectedPoke = JOptionPane.showInputDialog(this,"Choisissez un nouveau pokétudiant","Pokétudiant",JOptionPane.INFORMATION_MESSAGE,null,tab,tab[0]);
+        //JOptionPane pane = new JOptionPane();
+        //pane.set
+        Object selectedPoke = JOptionPane.showOptionDialog(this,"Choisissez un nouveau pokétudiant","Pokétudiant",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,tab,tab[0]);
         if(selectedPoke != null){
             ClientBack.getInstance().sendSwitchPoketudiant(selectedPoke.toString().split(" ")[0]);
         }
@@ -119,5 +129,9 @@ public class GamePanel extends JLayeredPane {
         }else{
             JOptionPane.showMessageDialog(this,"Le pokétudiant adverse est KO.");
         }
+    }
+
+    public void failEscapeNotification(){
+        JOptionPane.showMessageDialog(this,"Tentative de fuite échouée.");
     }
 }
