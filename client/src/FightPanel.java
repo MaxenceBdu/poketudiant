@@ -5,12 +5,11 @@ import java.awt.event.ActionListener;
 
 public class FightPanel extends JLayeredPane {
 
-    private final JButton leaveButton;
-    private final JButton catchButton;
-    private final JButton attack1;
-    private final JButton attack2;
+    private final JButton leaveButton,catchButton, switchButton, attack1, attack2;
 
     private final JLabel poketudiantPlayer,poketudiantOpponent;
+
+    private boolean wild;
 
 
     public FightPanel(int size, int xOffset, int yOffset){
@@ -57,18 +56,21 @@ public class FightPanel extends JLayeredPane {
         attack1 = new JButton();
         attack1.setLocation(size/10,(int) (size*0.8));
         attack1.addActionListener(new Attack1ButtonListener());
+        attack1.setEnabled(false);
         add(attack1, PALETTE_LAYER);
 
         // Button for second attack of player's poketudiant
         attack2 = new JButton();
         attack2.addActionListener(new Attack2ButtonListener());
+        attack2.setEnabled(false);
         add(attack2, PALETTE_LAYER);
 
         // Button to ask for a switch between poketudiants
-        JButton switchButton = new JButton("CHANGER");
+        switchButton = new JButton("CHANGER");
         switchButton.setSize(switchButton.getMaximumSize());
         switchButton.setLocation(size/9, (int) (size*0.9));
         switchButton.addActionListener(new SwitchButtonListener());
+        switchButton.setEnabled(false);
         add(switchButton, PALETTE_LAYER);
     }
 
@@ -78,6 +80,21 @@ public class FightPanel extends JLayeredPane {
     public void enableButtons(boolean wild){
         leaveButton.setEnabled(wild);
         catchButton.setEnabled(wild);
+        this.wild = wild;
+    }
+
+    /*
+        Enable or not the action buttons so the client has to wait for a "encounter enter action" message
+        to make buttons available again
+     */
+    public void enableActionButtons(boolean enable){
+        attack1.setEnabled(enable);
+        attack2.setEnabled(enable);
+        switchButton.setEnabled(enable);
+        if(wild){
+            catchButton.setEnabled(enable);
+            leaveButton.setEnabled(enable);
+        }
     }
 
     /*
@@ -91,11 +108,13 @@ public class FightPanel extends JLayeredPane {
 
         this.attack1.setText(attack1);
         this.attack1.setSize(this.attack1.getMaximumSize());
+        this.attack1.setEnabled(false);
 
         this.attack2.setSize(this.attack2.getMaximumSize());
         this.attack2.setLocation(this.attack1.getX()+this.attack1.getWidth()+10, this.attack1.getY());
         this.attack2.setText(attack2);
         this.attack2.setSize(this.attack2.getMaximumSize());
+        this.attack2.setEnabled(false);
         validate();
         repaint();
     }

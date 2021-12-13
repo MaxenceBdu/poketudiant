@@ -47,12 +47,15 @@ public class DisplayWindow extends JFrame {
     /*
         Creates the panel for the menu and displays it
      */
-    public void leaveHomeForMenu(){
+    public void goToMenu(boolean disconnected){
         if(menuPanel == null) {
             menuPanel = new MenuPanel(this.getWidth(), this.getHeight());
         }
         setContentPane(menuPanel);
         homePanel = null;
+        if(disconnected){
+            JOptionPane.showMessageDialog(this,"Vous avez été déconnecté du serveur");
+        }
     }
 
     /*
@@ -76,43 +79,47 @@ public class DisplayWindow extends JFrame {
         menuPanel.setVisible(false);
         menuPanel = null;
 
-        gamePanel = new GamePanel(getWidth(), getHeight());
+        if(gamePanel == null)
+            gamePanel = new GamePanel(getWidth(), getHeight());
         setContentPane(gamePanel);
 
         /* KeyListener here because not working in gamePanel */
-        addKeyListener(new KeyListener() {
+        if(getKeyListeners().length == 0){
+            addKeyListener(new KeyListener() {
 
-            @Override
-            public void keyTyped(KeyEvent keyEvent) {
-                // Empty
-            }
-
-            @Override
-            public void keyPressed(KeyEvent keyEvent) {
-                // Empty
-            }
-
-            @Override
-            public void keyReleased(KeyEvent keyEvent) {
-                /* Appui touches pour déplacement */
-                switch (keyEvent.getKeyCode()){
-                    case KeyEvent.VK_Z:
-                        ClientBack.getInstance().playerMoveUp();
-                        break;
-                    case KeyEvent.VK_Q:
-                        ClientBack.getInstance().playerMoveLeft();
-                        break;
-                    case KeyEvent.VK_S:
-                        ClientBack.getInstance().playerMoveDown();
-                        break;
-                    case KeyEvent.VK_D:
-                        ClientBack.getInstance().playerMoveRight();
-                        break;
-                    default:
-                        break;
+                @Override
+                public void keyTyped(KeyEvent keyEvent) {
+                    // Empty
                 }
-            }
-        });
+
+                @Override
+                public void keyPressed(KeyEvent keyEvent) {
+                    // Empty
+                }
+
+                @Override
+                public void keyReleased(KeyEvent keyEvent) {
+                    /* Appui touches pour déplacement */
+                    switch (keyEvent.getKeyCode()){
+                        case KeyEvent.VK_Z:
+                            ClientBack.getInstance().playerMoveUp();
+                            break;
+                        case KeyEvent.VK_Q:
+                            ClientBack.getInstance().playerMoveLeft();
+                            break;
+                        case KeyEvent.VK_S:
+                            ClientBack.getInstance().playerMoveDown();
+                            break;
+                        case KeyEvent.VK_D:
+                            ClientBack.getInstance().playerMoveRight();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            });
+        }
+
     }
 
     /*

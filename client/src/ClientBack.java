@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.*;
+import java.security.spec.DSAGenParameterSpec;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,8 @@ public class ClientBack implements ConstantMessages {
     private static ClientBack clientBackInstance;
     private int spritesSize;
 
+    private ClientDaemon clientDaemon;
+
     private ClientBack(){}
 
     public static ClientBack getInstance(){
@@ -34,6 +37,25 @@ public class ClientBack implements ConstantMessages {
         }
 
         return clientBackInstance;
+    }
+
+    public void closeTCPCommunication(){
+        try {
+            tcpSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        clientDaemon.setCanRun(false);
+    }
+
+    public void startDaemon(){
+        if(clientDaemon == null) {
+            clientDaemon = new ClientDaemon(socketReader);
+            clientDaemon.start();
+        }else {
+            clientDaemon.setCanRun(true);
+            clientDaemon.setSocketReader(socketReader);
+        }
     }
 
     public BufferedReader getSocketReader() {
@@ -272,7 +294,7 @@ public class ClientBack implements ConstantMessages {
     }
 
     /*
-        Functions to send player's actions during the fight
+        To change the id of a poketudiant in the team
      */
     public void sendPoketudiantMove(int id, String direction){
         socketPrinter.println("poketudiant "+id+" move "+direction);
@@ -282,8 +304,13 @@ public class ClientBack implements ConstantMessages {
         socketPrinter.println("poketudiant "+id+" free");
     }
 
+    /*
+        Function to send player's actions during the fight
+     */
     public void sendPlayerActionFight(String action){
         socketPrinter.println(ConstantMessages.PLAYER_ACTION+action);
+        if(!action.equals("switch"))
+            DisplayWindow.getInstance().getGamePanel().getFightPanel().enableActionButtons(false);
     }
 
     /*
@@ -384,8 +411,13 @@ public class ClientBack implements ConstantMessages {
                     // Notify evolution
                     DisplayWindow.getInstance().getGamePanel().evolutionNotification(split[3], split[4]);
                 }
-            }else if(split[1].equals("catch") && split[2].equals("ok")){
-                DisplayWindow.getInstance().getGamePanel().backToMap(0, false);
+            } else if(split[1].equals("enter") && split[2].equals("action")) {
+                DisplayWindow.getInstance().getGamePanel().getFightPanel().enableActionButtons(true);
+            }else if(split[1].equals("catch")){
+                if(split[2].equals("ok"))
+                    DisplayWindow.getInstance().getGamePanel().backToMap(0, false);
+                else
+                    DisplayWindow.getInstance().getGamePanel().failCatchNotification();
             }else if(split[1].equals("win") || split[1].equals("lose")){
                 DisplayWindow.getInstance().getGamePanel().backToMap(2, split[1].equals("win"));
             }else if(split[1].equals("escape")) {
@@ -407,5 +439,6 @@ public class ClientBack implements ConstantMessages {
      */
     public void sendSwitchPoketudiant(String s) {
         socketPrinter.println(SWITCH_POKE+s);
+        DisplayWindow.getInstance().getGamePanel().getFightPanel().enableActionButtons(false);
     }
 }

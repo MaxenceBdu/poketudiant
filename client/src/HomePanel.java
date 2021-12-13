@@ -3,7 +3,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -49,7 +48,7 @@ public class HomePanel extends JLayeredPane {
     static class PlayButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            DisplayWindow.getInstance().leaveHomeForMenu();
+            DisplayWindow.getInstance().goToMenu(false);
         }
     }
 }
