@@ -153,4 +153,7 @@ class Poketudiant:
                 expToLastLevel += 500 * ((1 + i) / 2)
             if self.__exp < expToLastLevel:
                 self.__niveau -= 1
+                self.__attaque = int(self.__attaque * 0.9)
+                self.__defense = int(self.__defense * 0.9)
+                self.__maxPV = int(self.__maxPV * 0.9)
         
