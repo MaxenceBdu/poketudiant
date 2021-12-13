@@ -2,3 +2,4 @@
 /client/bin
 /client/.idea
 /client/out
+/serveur/__pycache__/
