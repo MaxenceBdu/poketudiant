@@ -456,7 +456,7 @@ class Combat:
     # Méthode qui effectue ou non la cpature demandée par un joueur
     def capture(self,indiceJoueur,poketudiantWild):
         probaCapture = 2*max(1/2 - (poketudiantWild.getCurrentPV()/poketudiantWild.getMaxPV()),0) * 100
-        if probaCapture <= random.randrange(0,99):
+        if probaCapture >= random.randrange(0,99):
             self.__partie.getEquipeJoueur(indiceJoueur).ajoutePoketudiant(poketudiantWild)
             return True
         return False
