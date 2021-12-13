@@ -26,6 +26,8 @@ public class ClientBack implements ConstantMessages {
     private static ClientBack clientBackInstance;
     private int spritesSize;
 
+    private ClientDaemon clientDaemon;
+
     private ClientBack(){}
 
     public static ClientBack getInstance(){
@@ -34,6 +36,25 @@ public class ClientBack implements ConstantMessages {
         }
 
         return clientBackInstance;
+    }
+
+    public void closeTCPCommunication(){
+        try {
+            tcpSocket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        clientDaemon.setCanRun(false);
+    }
+
+    public void startDaemon(){
+        if(clientDaemon == null) {
+            clientDaemon = new ClientDaemon(socketReader);
+            clientDaemon.start();
+        }else {
+            clientDaemon.setCanRun(true);
+            clientDaemon.setSocketReader(socketReader);
+        }
     }
 
     public BufferedReader getSocketReader() {
@@ -268,6 +289,7 @@ public class ClientBack implements ConstantMessages {
     }
 
     public void sendPlayerAction(String move){
+        System.out.println("dans sendPlayerAction");
         socketPrinter.println(move);
     }
 

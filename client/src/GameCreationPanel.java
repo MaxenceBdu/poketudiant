@@ -73,7 +73,7 @@ public class GameCreationPanel extends JPanel {
             if(ClientBack.getInstance().askForGameCreation(gameCreationPanel.textArea.getText())){
                 DisplayWindow.getInstance().goToGame();
                 // Start the daemon
-                new ClientDaemon(ClientBack.getInstance().getSocketReader()).start();
+                ClientBack.getInstance().startDaemon();
             }else{
                 // Display error message
                 gameCreationPanel.infoMessage.setForeground(Color.RED);

@@ -1,17 +1,26 @@
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ClientDaemon extends Thread implements ConstantMessages{
 
-    private final BufferedReader socketReader;
+    private BufferedReader socketReader;
+    private boolean canRun;
 
     public ClientDaemon(BufferedReader socketReader){
         this.socketReader = socketReader;
+        canRun = true;
         setDaemon(true);
+    }
+
+    public void setCanRun(boolean canRun) {
+        this.canRun = canRun;
+    }
+
+    public void setSocketReader(BufferedReader socketReader) {
+        this.socketReader = socketReader;
     }
 
     @Override
@@ -20,9 +29,13 @@ public class ClientDaemon extends Thread implements ConstantMessages{
             When the messages are about the map, the team or an index ask,
             we have to read incoming lines, so they are special cases
          */
-        while(true){
+        while(canRun){
             try{
                 String data = socketReader.readLine();
+
+                if(data == null){
+                    throw new IOException();
+                }
 
                 if(data.startsWith("map")){ // If it's map information
                     String[] split = data.split(" ");
@@ -57,8 +70,16 @@ public class ClientDaemon extends Thread implements ConstantMessages{
                     }
                     ClientBack.getInstance().interpretFightMessage(data);
                 }
-            } catch(IOException e){
+            } catch(SocketTimeoutException e){
                 // Do nothing
+            }catch (IOException e){
+                try {
+                    socketReader.close();
+                } catch (IOException ex) {
+                    //ex.printStackTrace();
+                }
+                DisplayWindow.getInstance().goToMenu(true);
+                ClientBack.getInstance().closeTCPCommunication();
             }
 
         }
