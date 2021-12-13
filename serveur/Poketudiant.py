@@ -95,8 +95,7 @@ class Poketudiant:
 
     # Méthode qui calcule l'expérience qu'un poketudiant rapporte quand il est tué
     def calculXP(self):
-        expToNextLevel = 500 * ((1 + self.__niveau+1) / 2)
-        return int(expToNextLevel * 0.1)
+        return int(self.__exp * 0.1)
 
     # Méthode qui ajoute de l'expérience à un poketudiant
     def giveXP(self,montant):
