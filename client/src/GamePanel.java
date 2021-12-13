@@ -111,8 +111,6 @@ public class GamePanel extends JLayeredPane {
     }
 
     public void chooseNewPoketudiant(String[] tab){
-        //JOptionPane pane = new JOptionPane();
-        //pane.set
         Object selectedPoke = JOptionPane.showOptionDialog(this,"Choisissez un nouveau pokétudiant","Pokétudiant",JOptionPane.DEFAULT_OPTION,JOptionPane.INFORMATION_MESSAGE,null,tab,tab[0]);
         if(selectedPoke != null){
             ClientBack.getInstance().sendSwitchPoketudiant(selectedPoke.toString().split(" ")[0]);
@@ -134,4 +132,9 @@ public class GamePanel extends JLayeredPane {
     public void failEscapeNotification(){
         JOptionPane.showMessageDialog(this,"Tentative de fuite échouée.");
     }
+
+    public void failCatchNotification(){
+        JOptionPane.showMessageDialog(this,"Tentative de capture échouée.");
+    }
+
 }

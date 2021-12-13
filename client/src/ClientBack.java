@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.*;
+import java.security.spec.DSAGenParameterSpec;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -412,8 +413,11 @@ public class ClientBack implements ConstantMessages {
                 }
             } else if(split[1].equals("enter") && split[2].equals("action")) {
                 DisplayWindow.getInstance().getGamePanel().getFightPanel().enableActionButtons(true);
-            }else if(split[1].equals("catch") && split[2].equals("ok")){
-                DisplayWindow.getInstance().getGamePanel().backToMap(0, false);
+            }else if(split[1].equals("catch")){
+                if(split[2].equals("ok"))
+                    DisplayWindow.getInstance().getGamePanel().backToMap(0, false);
+                else
+                    DisplayWindow.getInstance().getGamePanel().failCatchNotification();
             }else if(split[1].equals("win") || split[1].equals("lose")){
                 DisplayWindow.getInstance().getGamePanel().backToMap(2, split[1].equals("win"));
             }else if(split[1].equals("escape")) {
