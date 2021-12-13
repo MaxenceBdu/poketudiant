@@ -100,7 +100,6 @@ public class DisplayWindow extends JFrame {
                 @Override
                 public void keyReleased(KeyEvent keyEvent) {
                     /* Appui touches pour déplacement */
-                    System.out.println("key listener");
                     switch (keyEvent.getKeyCode()){
                         case KeyEvent.VK_Z:
                             ClientBack.getInstance().playerMoveUp();

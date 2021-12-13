@@ -32,7 +32,7 @@ public class ClientDaemon extends Thread implements ConstantMessages{
         while(canRun){
             try{
                 String data = socketReader.readLine();
-
+                System.out.println(data);
                 if(data == null){
                     throw new IOException();
                 }
