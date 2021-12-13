@@ -164,9 +164,10 @@ class Client:
         if ConstantMessage.ConstantMessage["CLIENT_RLEAVE"] in data:
             if self.__combat.commande("fuite",self):
                 self.__commandType = CommandType.CommandType["GAME"]
+                self.__combat = None
                 self.__partie.sendMapToAll()
                 self.__partie.sendEquipe(self)
-                self.__combat = None
+                e
         elif ConstantMessage.ConstantMessage["CLIENT_RATTACK"] in data:
             if "attack1" in data:
                 indice = 1
@@ -174,16 +175,18 @@ class Client:
                 indice = 2
             if self.__combat.commande("attaque",self,indice):
                 self.__commandType = CommandType.CommandType["GAME"]
+                self.__combat = None
                 self.__partie.sendMapToAll()
                 self.__partie.sendEquipe(self)
-                self.__combat = None
+                
                 return
         elif ConstantMessage.ConstantMessage["CLIENT_RCATCH"] in data:
             if self.__combat.commande("capture",self):
                 self.__commandType = CommandType.CommandType["GAME"]
+                self.__combat = None
                 self.__partie.sendMapToAll()
                 self.__partie.sendEquipe(self)
-                self.__combat = None
+                
                 return
         elif ConstantMessage.ConstantMessage["CLIENT_RSWITCH"] in data:
                 self.__commandType = CommandType.CommandType["SWITCH"]
