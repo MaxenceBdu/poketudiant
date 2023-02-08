@@ -7,7 +7,7 @@ Make sure to have python3 on your computer
 
 ## Start the client
 
-Go to client folder and executes client.jar
+Go to client folder and execute client.jar
 
 ## How to play
 
